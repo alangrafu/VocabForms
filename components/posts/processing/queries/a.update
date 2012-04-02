@@ -1,0 +1,10 @@
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX base: <{{lodspk.ns.local}}>
+INSERT DATA{ 
+  GRAPH <http://test>{
+    <http://example/person5> 
+    {%for i, item in lodspk.args%}
+      {{i}} "{{item}}";
+    {%endfor%}
+  }
+}

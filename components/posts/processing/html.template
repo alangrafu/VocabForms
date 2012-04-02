@@ -1,0 +1,7 @@
+{%if lodspk.status == 200 || lodspk.status == 201%}
+{%for i,a in lodspk.args%}
+{{i}} - {{a}}<br/>
+{%endfor%}
+{%else%}
+An error ocurred (status {{lodspk.status}}) 
+{%endif%}
