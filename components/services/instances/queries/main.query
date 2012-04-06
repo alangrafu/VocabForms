@@ -1,0 +1,17 @@
+{%for h in lodspk.header %}
+PREFIX {{h.prefix}}: <{{h.ns}}>
+{%endfor%}
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
+    GRAPH <http://poderopedia.com/instances> {
+      ?resource a {{lodspk.args.arg0}} .
+      OPTIONAL{ ?resource ?p ?l .}
+      {%if lodspk.args.arg1%}
+      FILTER(regex(?l, "{{lodspk.args.arg1}}", "i"))
+      {%endif%}
+    }
+    GRAPH <{{lodspk.g}}>{
+      ?p rdfs:subPropertyOf* rdfs:label .
+    }
+}GROUP BY ?resource

@@ -5,12 +5,12 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX local: <http://poderopedia.com/vocab/>
 
-SELECT DISTINCT ?predicate ?predLabel WHERE {
+SELECT DISTINCT ?predicate ?predLabel ?predRange WHERE {
   GRAPH <{{lodspk.g}}>{
     {{lodspk.args.arg0}} rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y .
     OPTIONAL { ?predicate rdfs:label ?predLabel }
+    OPTIONAL { ?predicate rdfs:range ?predRange }
   }
-  FILTER(lang(?predLabel) = "en")
 }
 

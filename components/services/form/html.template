@@ -5,16 +5,26 @@
   <head>
     <title>Create instance</title>
     <link href="{{lodspk.baseUrl}}css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-    <style type="text/css">
-    </style>
-  </head>
+    <link href="{{lodspk.baseUrl}}css/ui.css" rel="stylesheet" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{lodspk.home}}js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
+    <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
+<style>
+	.ui-autocomplete-loading { background: white url('{{lodspk.home}}img/ui-anim_basic_16x16.gif') right center no-repeat; }
+	#city { width: 25em; }
+	</style>  </head>
   <body>
     <h1>Create instance of {{lodspk.args.arg0}}</h1>
- 	 <form action="/bio/processing" method="post">
+ 	 <table>
     {% for row in models.main %}
-        <label>{{row.predLabel.value}}</label><input type="text" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"/><br/>
+        <tr><td><label>{{row.predLabel.value}}</label></td><td><input type="text" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}" class="{{row.predRange.curie}}" value=""/></td></tr>
     {% endfor %}
-    <input type="submit"/>
+    </table>
+ 	 <form action="{{lodspk.home}}/processingNO" method="post">
+    {% for row in models.main %}
+        <input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}}" value=""/>
+    {% endfor %}
+    <button>Create</button>
     </form>
   </body>
 </html>
