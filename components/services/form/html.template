@@ -16,13 +16,23 @@
   <body>
     <h1>Create instance of {{lodspk.args.arg0}}</h1>
  	 <table>
-    {% for row in models.main %}
-        <tr><td><label>{{row.predLabel.value}}</label></td><td><input type="text" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}" class="{{row.predRange.curie}}" value=""/></td></tr>
+ 	      <tr><td><label>Label</label></td><td><input type="text" name="field_rdfs:label" id="field_rdfs:label" class="rdfs:Literal datatype" value=""/></td></tr>
+    {% for row in models.data %}
+        <tr><td><label>{{row.predLabel.value}}</label></td><td><input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype" value=""/></td></tr>
+    {% endfor %}
+    {% for row in models.object %}
+        <tr><td><label>{{row.predLabel.value}}</label></td><td><input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype" value=""/></td></tr>
     {% endfor %}
     </table>
- 	 <form action="{{lodspk.home}}/processingNO" method="post">
-    {% for row in models.main %}
-        <input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}}" value=""/>
+ 	 <form method="post" id="data">
+ 	 <input type="hidden" name="uri" id="uri" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" name="a" id="a" value="{{lodspk.args.arg0}}"/>
+ 	 <input type="hidden" name="rdfs:label" id="rdfs:label" class="rdfs:Literal datatype" value=""/>
+    {% for row in models.data %}
+        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
+    {% endfor %}
+    {% for row in models.object %}
+        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     <button>Create</button>
     </form>
