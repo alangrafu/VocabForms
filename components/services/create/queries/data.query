@@ -10,10 +10,12 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange WHERE {
   GRAPH <{{lodspk.g}}>{
     {{lodspk.args.arg0}} rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
-               a owl:ObjectProperty. 
+    FILTER( NOT EXISTS { ?predicate a owl:ObjectProperty } &&
+            str(?predicate) != "http://www.w3.org/2000/01/rdf-schema#label" &&
+            str(?predicate) != "http://www.w3.org/2000/01/rdf-schema#comment" &&
+            NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate })
     OPTIONAL { ?predicate rdfs:label ?pl }
     OPTIONAL { ?predicate rdfs:range ?predRange }
   }
 }GROUP BY ?predicate ?predRange
 ORDER BY ?predLabel ?predicate
-

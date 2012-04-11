@@ -1,0 +1,21 @@
+SELECT * WHERE{
+  {
+    GRAPH ?g{
+     {
+      <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> ?x []      
+     }UNION{
+      [] <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> []
+     }UNION{
+      [] ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}>
+     }
+   }
+  }UNION{
+    {
+     <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> ?x []
+    }UNION{
+     ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> []
+    }UNION{
+     [] ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}>
+    }
+  }
+}LIMIT 1

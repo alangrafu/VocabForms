@@ -1,0 +1,5 @@
+select ?x where{
+ graph ?g{
+  ?p ?x ?o .
+ }
+}limit 1
