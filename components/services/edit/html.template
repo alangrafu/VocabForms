@@ -4,6 +4,7 @@
       version="XHTML+RDFa 1.0" xml:lang="en">
   <head>
     <title>Edit instance</title>
+    <link href="{{lodspk.baseUrl}}css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{lodspk.baseUrl}}css/basic.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="{{lodspk.baseUrl}}css/ui.css" rel="stylesheet" type="text/css" media="screen" />
     <script type="text/javascript">
@@ -14,7 +15,7 @@
     var okUri = "{{lodspk.home}}";
     var values = {
     {%for i in models.values%}
-      {%if forloop.counter0 > 0 %},{%endif%}"{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{{i.object.value}}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%}}
+      {%if forloop.counter0 > 0 %},{%endif%}"{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{%if i.object.mirroredUri%}{{i.object.mirroredUri}}{%else%}{{i.object.value}}{%endif%}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%}}
     {%endfor%}
     };
     </script>
@@ -29,13 +30,15 @@
   <body>
   <header>
     <h1>Edit instance of {{lodspk.args.all|deurifier}}</h1>
-    <div style="float:right"><a href='{{lodspk.args.all|deurifier}}'>Ver</a></div>
     </header>
     <section>
-    <button id="create">Save</button>
+    <div class="buttons">
+    <button id="run" class="btn btn-primary btn-large">Save</button><br/>
+    <button id="cancel" class="btn btn-primary btn-large">Cancel</button>
+    </div>
  	 <table class="rounded-corners-a">
- 	      <tr><td class="rounded-corners-a"><label for="field_rdfs:label">Label</label></td><td><input type="text" name="field_rdfs:label" id="field_rdfs:label" class="rdfs:Literal datatype rounded-corners-a visible" value="" size="50"/></td></tr>
- 	      <tr><td class="rounded-corners-a"><label for="field_rdfs:comment">Comment</label></td><td><input type="text" name="field_rdfs:comment" id="field_rdfs:comment" class="rdfs:Literal datatype rounded-corners-a visible" value="" size="50"/></td></tr>
+ 	      <tr><td class="odd"><label for="field_rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" name="field_rdfs:label" id="field_rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
+ 	      <tr><td class="even"><label for="field_rdfs:comment">Comment</label></td><td class="even"><input type="text" name="field_rdfs:comment" id="field_rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
     {% for row in models.data %}
         <tr><td class="{%cycle "odd" "even"%}"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" value=""/></td></tr>
     {% endfor %}
@@ -44,18 +47,19 @@
     {% endfor %}
     </table>
  	 <form method="post" id="data">
- 	 <input type="hidden" name="uri" id="uri" value='{{lodspk.args.all|deurifier}}'/>
- 	 <input type="hidden" name="a" id="a" value='{%for i in models.values%}{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%endif%}{%endfor%}'/>
- 	 <input type="hidden" name="rdfs:label" id="rdfs:label" class="datatype" value=""/>
- 	 <input type="hidden" name="rdfs:comment" id="rdfs:comment" class="datatype" value=""/>
+ 	 <input type="hidden" name="uri" id="uri" value='{{lodspk.args.all|deurifier}}'/><br/>
+ 	 <input type="hidden" name="a" id="a" value='{%for i in models.values%}{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%endif%}{%endfor%}'/><br/>
+ 	 <input type="hidden" name="rdfs:label" id="rdfs:label" class="datatype" value=""/><br/>
+ 	 <input type="hidden" name="rdfs:comment" id="rdfs:comment" class="datatype" value=""/><br/>
     {% for row in models.data %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
+        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" /><br/>
     {% endfor %}
     {% for row in models.object %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
+        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" /><br/>
     {% endfor %}
     </form>
-    <div id="msg"></div>
+    <div id="msgok"></div>
+    <div id="msgerror"></div>
     </section>
   </body>
 </html>

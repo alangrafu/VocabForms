@@ -35,6 +35,7 @@ $(document).ready(function(){
     });
     
     $(".rdfs\\:Literal").live('change', function(){
+        console.log("change",$(this).attr("id"));
         token = '"';
         hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');    
         if($(this).val().length>0){
@@ -45,6 +46,12 @@ $(document).ready(function(){
           }
           console.log(hiddenfield,$("#"+hiddenfield).val() );
         }
+    });
+    
+    $("input.objecttype").live('change', function(){
+        hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');  
+        console.log(hiddenfield);
+        $("#"+hiddenfield).val("<"+$(this).val()+">");
     });
     
     $( "#msgok" ).dialog({
@@ -67,8 +74,11 @@ $(document).ready(function(){
         hide: "blind"
 		});
 		
+		$("#cancel").click(function(){
+		  history.back(-1);
+		});
 		
-    $(":button").click(function(){
+    $("#run").click(function(){
         var currentButton = "#"+$(this).attr("id");
         $(currentButton).attr("disabled", "disabled");
         if($("#uri").val() == "" || $("#uri").val() == null){
@@ -121,6 +131,7 @@ $(document).ready(function(){
           data: dataString,
           dataType: "json",
           success: function(data) {
+            console.log("Data status:", data.status);
             if(parseInt(data.status) >= 200 && parseInt(data.status) < 300){
               $("#msgok").html("Ok").dialog("open");
             }else{
@@ -131,7 +142,7 @@ $(document).ready(function(){
           },
           error: function(){
             $("#msgerror").html("Error while posting data");
-            $( "#msmsgerror" ).dialog("open");
+            $( "#msgerror" ).dialog("open");
           }
       });
     }

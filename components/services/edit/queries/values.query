@@ -7,7 +7,7 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX local: <http://poderopedia.com/vocab/>
 
 SELECT DISTINCT ?predicate ?object ?objectLabel WHERE {
-  GRAPH ?g{
+  GRAPH <{{lodspk.instances}}>{
       <{{lodspk.args.all|deurifier}}> ?predicate ?object .
       OPTIONAL{ ?object rdfs:label ?objectLabel .}
   }

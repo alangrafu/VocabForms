@@ -1,0 +1,8 @@
+WITH <{{lodspk.instances}}>
+DELETE {<{{lodspk.args.uri}}> ?s ?p}
+WHERE {<{{lodspk.args.uri}}> ?s ?p}
+
+WITH <{{lodspk.instances}}>
+DELETE {?s ?p <{{lodspk.args.uri}}> }
+WHERE {?s ?p <{{lodspk.args.uri}}> }
+

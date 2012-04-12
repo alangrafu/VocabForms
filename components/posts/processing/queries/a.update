@@ -1,13 +1,14 @@
 PREFIX base: <{{lodspk.ns.local}}>
 PREFIX local: <{{lodspk.ns.local}}>
 PREFIX poder: <{{lodspk.ns.local}}>
+PREFIX vocab: <http://poderopedia.com/vocab/>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX base: <{{lodspk.ns.local}}>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 INSERT { 
-  GRAPH <http://test>{
+  GRAPH <{{lodspk.instances}}>{
     <{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}> 
     {%for i, item in lodspk.args%}{%if i != "uri"%}{%if item != ""%}
           {{i}} {{item|safe}};

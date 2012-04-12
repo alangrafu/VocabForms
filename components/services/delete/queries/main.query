@@ -1,0 +1,9 @@
+SELECT ?p WHERE {
+  GRAPH <{{lodspk.instances}}>{
+    {
+      [] ?p <{{lodspk.args.all|deurifier}}>
+    }UNION{
+      <{{lodspk.args.all|deurifier}}> ?p []
+    }
+  }
+}

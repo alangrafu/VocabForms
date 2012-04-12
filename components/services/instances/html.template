@@ -5,6 +5,7 @@
     {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
   <head>
     <title>Instances of {{lodspk.args.arg0}}</title>
+    <link href="{{lodspk.baseUrl}}css/bootstrap.min.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="../css/basic.css" rel="stylesheet" type="text/css" media="screen" />
   </head>
   <body>
@@ -12,7 +13,9 @@
 {%include "../../includes/header.inc"%}
 	<ul>
     {% for row in models.main %}
-        <li><a href="{{ row.resource.value }}">{{row.resource.curie}}</a></li>
+        <li><a href="{{ row.resource.value }}">{%if row.label.value%}{{row.label.value}}{%else%}{{row.resource.curie}}{%endif%}</a>
+         - <a href="{{lodspk.home}}edit/{{ row.resource.mirroredUri|urifier }}">Edit</a>
+         - <a href="{{lodspk.home}}delete/{{ row.resource.mirroredUri|urifier }}">Delete</a></li>
     {% endfor %}
     </ul>
   </body>

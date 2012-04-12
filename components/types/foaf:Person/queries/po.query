@@ -1,9 +1,12 @@
-SELECT ?p ?o  WHERE {
-  {
-    GRAPH ?g{
-                <{{uri}}> ?p ?o.
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX vocab: <http://poderopedia.com/vocab/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?label ?name ?img ?fln ?sln  WHERE {
+    GRAPH <{{lodspk.instances}}>{
+       <{{uri}}> rdfs:label ?label.
+       OPTIONAL{ <{{uri}}> foaf:firstName ?name.}
+       OPTIONAL{ <{{uri}}> foaf:img ?img.}
+       OPTIONAL{ <{{uri}}> vocab:firstLastName ?fln.}
+       OPTIONAL{ <{{uri}}> vocab:secondLastName ?sln.}
     }
-  }UNION{     
-                <{{uri}}> ?p ?o .
-  }
 }

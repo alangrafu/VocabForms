@@ -5,6 +5,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX local: <http://poderopedia.com/vocab/>
+PREFIX layout: <http://graves.cl/layout/>
 
 SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange WHERE {
   GRAPH <{{lodspk.g}}>{
@@ -17,5 +18,11 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange WHERE {
     OPTIONAL { ?predicate rdfs:label ?pl }
     OPTIONAL { ?predicate rdfs:range ?predRange }
   }
-}GROUP BY ?predicate ?predRange
-ORDER BY ?predLabel ?predicate
+  OPTIONAL{
+    GRAPH <http://poderopedia.com/layout>{
+      ?predicate layout:position ?pos.    
+    }
+  }
+  FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))
+}GROUP BY ?predicate ?predRange ?pos
+ORDER BY DESC(?pos) ?predLabel ?predicate

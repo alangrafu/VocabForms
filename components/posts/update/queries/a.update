@@ -8,21 +8,12 @@ PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-DELETE { ?uri ?x ?y } WHERE{
-  GRAPH <http://test>{
-  {
-    ?uri ?x ?y
-  }UNION{
-    ?x ?uri ?y
-  }UNION{
-      ?x ?y ?uri
-  }
-  FILTER(str(?uri) = "{{lodspk.args.uri}}")
-  }
-}
+WITH <{{lodspk.instances}}>
+DELETE {<{{uri}}> ?s ?p}
+WHERE {<{{uri}}> ?s ?p}
 
 INSERT { 
-  GRAPH <http://test>{
+  GRAPH <{{lodspk.instances}}>{
     <{{lodspk.args.uri}}>
     {%for i, item in lodspk.args%}{%if i != "uri"%}{%if item != ""%}
           {{i}} {{item|safe}};

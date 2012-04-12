@@ -4,7 +4,7 @@ PREFIX {{h.prefix}}: <{{h.ns}}>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
-    GRAPH ?g {
+    GRAPH <{{lodspk.instances}}> {
       ?resource rdf:type/rdfs:subClassOf* {{lodspk.args.arg0}} .
       OPTIONAL{ ?resource ?p ?l .}
       {%if lodspk.args.arg1%}

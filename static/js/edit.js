@@ -5,12 +5,6 @@ $(document).ready(function(){
       if(visible == "rdf\\:type"){
         $("#a").val(values[i].value);
       }
-      if(values[i].label != ""){
-        $("#field_"+visible).val(values[i].label);
-      }else{
-        $("#field_"+visible).val(values[i].value);
-      }
-      $("#"+visible).val(values[i].value);
       if(visible == "rdfs\\:label"){
         $("#rdfs\\:label").val("\""+values[i].value+"\"");
       }
@@ -18,5 +12,13 @@ $(document).ready(function(){
         $("#rdfs\\:comment").val("\""+values[i].value+"\"");
       }
       
+      if(values[i].label != ""){
+        $("#field_"+visible).val(values[i].label);
+        $("#"+visible).val("<"+values[i].value+">");
+      }else{
+        $("#field_"+visible).val(values[i].value);
+        $("#"+visible).val("\""+values[i].value+"\"");
+      }
+      console.log(visible,$("#"+visible).val());      
     };
 });

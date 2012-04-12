@@ -3,8 +3,8 @@
        {%for i in models.main%}
          {
            "name": "{%if i.label.value%}{{i.label.value}}{%else%}{{i.resource.value}}{%endif%}",
-           "value": "{{i.resource.value}}"
-         }{%if forloop.first AND models.main|length >  1%},{%endif%}
+           "value": "{{i.resource.mirroredUri}}"
+         }{%if forloop.first %},{%endif%}
        {%endfor%}
    ]
 
