@@ -1,0 +1,236 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wot: <http://xmlns.com/wot/0.1/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix bio: <http://purl.org/vocab/bio/0.1/> .
+@prefix rel: <http://purl.org/vocab/relationship/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix label: <http://purl.org/net/vocab/2004/03/label#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://poderopedia.com/vocab/> .
+@prefix layout: <http://graves.cl/layout/> .
+@prefix vocab: <http://poderopedia.com/vocab/> .
+
+
+
+###### Classes
+
+foaf:Person
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet ;
+        layout:shown "true"^^xsd:boolean 
+        ] .
+
+vocab:Company
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet ;
+        layout:shown "true"^^xsd:boolean 
+        ] .
+
+vocab:Organization
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet ;
+        layout:shown "true"^^xsd:boolean 
+        ] .
+
+vocab:NewsEvent
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet ;
+        layout:shown "true"^^xsd:boolean 
+        ] .
+
+vocab:NewsEvent
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet ;
+        layout:shown "true"^^xsd:boolean 
+        ] .
+        
+        
+####### Predicates
+:firstLastName
+    layout:hasLayoutParameterSet [
+        layout:position 19 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+:secondLastName
+    layout:hasLayoutParameterSet [
+        layout:position 17 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+rdfs:comment
+    layout:hasLayoutParameterSet [
+        layout:position 99998 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+rdfs:label
+    layout:hasLayoutParameterSet [
+        layout:position 99999 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+foaf:age
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:aimChatID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:firstName
+    layout:hasLayoutParameterSet [
+        layout:position 20 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+foaf:geekcode
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:icqChatID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:interest
+    layout:hasLayoutParameterSet [
+        layout:position -1 ;
+        a layout:LayoutParameterSet;
+        layout:shown "true"^^xsd:boolean     ] .
+
+foaf:jabberID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:made
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:mbox
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:mbox_sha1sum
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:msnChatID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:myersBriggs
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:openid
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:pastProject
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:plan
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:publications
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:schoolHomepage
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:skypeID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:status
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:surname
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:tipjar
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:topic_interest
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:weblog
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:workInfoHomepage
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:workplaceHomepage
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:yahooChatID
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:based_near
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:currentProject
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:account
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:holdsAccount
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+foaf:lastName
+    layout:hasLayoutParameterSet [
+        a layout:LayoutParameterSet;
+        layout:shown "false"^^xsd:boolean     ] .
+
+
