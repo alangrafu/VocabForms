@@ -1,57 +1,80 @@
 $(document).ready(function(){
     var a = [];
+    function autocomplete(item){
+      $( item ).autocomplete({
+          source: function( request, response ) {
+            $.ajax({
+                url: autocompleteUri+$(item).attr("class").split(' ')[0]+"/"+request.term,
+                dataType: "json",
+                success: function( data ) {
+                  response( $.map( data.items, function( item ) {
+                      return {
+                        label: item.name,
+                        value: item.value
+                      }
+                  }));
+                }
+            });
+          },
+          minLength: 2,
+          select: function( event, ui ) {
+            beginToken = ($(this).is(".objecttype"))?'<':'"';
+            endToken   = ($(this).is(".objecttype"))?'>':'"';
+            var hiddenfield = $(item).attr("id").replace("field_", "").replace(":", '\\:');
+            var visiblefield = $(item).attr("id").replace(":", '\\:');
+            $("#"+hiddenfield).val(beginToken+ui.item.value+endToken);
+            $("#"+visiblefield).val(ui.item.label);
+          },
+          /*open: function() {
+          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+          },
+          close: function() {
+          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+          }*/
+      });
+    }
+    
     $("input:not(.rdfs\\:Literal)").each(function(i, item){
-        $( item ).autocomplete({
-            source: function( request, response ) {
-              $.ajax({
-                  url: autocompleteUri+$(item).attr("class").split(' ')[0]+"/"+request.term,
-                  dataType: "json",
-                  success: function( data ) {
-                    response( $.map( data.items, function( item ) {
-                        return {
-                          label: item.name,
-                          value: item.value
-                        }
-                    }));
-                  }
-              });
-            },
-            minLength: 2,
-            select: function( event, ui ) {
-              beginToken = ($(this).is(".objecttype"))?'<':'"';
-              endToken   = ($(this).is(".objecttype"))?'>':'"';
-              var hiddenfield = $(item).attr("id").replace("field_", "").replace(":", '\\:');
-              var visiblefield = $(item).attr("id").replace(":", '\\:');
-              $("#"+hiddenfield).val(beginToken+ui.item.value+endToken);
-              $("#"+visiblefield).val(ui.item.label);
-            },
-            /*open: function() {
-            $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-            },
-            close: function() {
-            $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-            }*/
-        });
+        autocomplete(item);
     });
     
-    $(".rdfs\\:Literal").live('change', function(){
-        console.log("change",$(this).attr("id"));
-        token = '"';
+    $("#view").on('change', "input.visible", function(){
+        tokenLeft = '"';
+        tokenRight = '"';
+        if($(this).is(".objecttype")){
+          tokenLeft="<";
+          tokenRight=">";
+        }
         hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');    
         if($(this).val().length>0){
-          $("#"+hiddenfield).val(token+$(this).val()+token);
+          offset = $(this).next().val();
+          $("#"+hiddenfield).val(tokenLeft+$(this).val()+tokenRight);
+          console.log("#"+hiddenfield+offset);
           if(hiddenfield == "rdfs\\:label"){
-            $("#uri").val($(this).val().replace(/ /gi, "_"));
-            console.log("uri",$("#uri").val() );
+            if(creationMode){
+              $("#uri").val($(this).val().replace(/ /gi, "_"));
+            }
+            $("#"+hiddenfield).val(tokenLeft+$(this).val()+tokenRight);
           }
-          console.log(hiddenfield,$("#"+hiddenfield).val() );
         }
     });
-    
+    /*
     $("input.objecttype").live('change', function(){
         hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');  
-        console.log(hiddenfield);
+        if($(this).val() != ""){
         $("#"+hiddenfield).val("<"+$(this).val()+">");
+        }else{
+        $("#"+hiddenfield).val("");        
+        }
+    });
+    */
+    $("#view").on('click', "button.add", function(){
+     id = $(this).prev().attr("id").replace(/field_/,"");
+     x = id.split(separator);
+     clss = $(this).prev().attr("class");
+     id = (parseInt(x[0])+1)+separator+x[1];
+     $(this).before('<br/><input size="100" type="text" id="field_'+id+'" class="'+clss+'" value="" />');
+     $("#data").append('<input size="100" type="text" id="'+id+'" value=""/>');
     });
     
     $( "#msgok" ).dialog({
@@ -88,13 +111,14 @@ $(document).ready(function(){
               show: "blind",
               hide: "blind"
           });
-          $("#msgerror").html("<div title='Error'><p>You need to add AT LEAST a label</p></div>").dialog("open");                
+          $("#msgerror").html("<div title='Error'><p>You need to add AT LEAST a label</p></div>").dialog("open");
+          $(currentButton).removeAttr("disabled");
           return false;
         }
         if(creationMode == true){
           $.ajax({
               type: "GET",
-              url: existsUri+$("#a").val()+"/"+$("#uri").val(),
+              url: existsUri+$("#a").val()+separator+$("#uri").val(),
               dataType: "json",
               success: function(data){
                 if(data.exists == true){
@@ -113,7 +137,6 @@ $(document).ready(function(){
           
         }
     });
-    
     
     function postData(){
       var dataString = "";

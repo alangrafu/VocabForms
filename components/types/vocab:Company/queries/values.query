@@ -1,0 +1,24 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX local: <http://poderopedia.com/vocab/>
+PREFIX layout: <http://graves.cl/layout/>
+
+SELECT DISTINCT ?predicate ?object ?predicateLabel WHERE {
+  GRAPH <{{lodspk.instances}}>{
+      <{{uri}}> ?predicate ?object .
+      FILTER NOT EXISTS{<{{uri}}> a ?object}
+  }
+  OPTIONAL{
+    GRAPH <{{lodspk.vocab}}>{
+      ?predicate rdfs:label ?predicateLabel .
+    }
+  }
+  OPTIONAL{
+    GRAPH <{{lodspk.layout}}>{
+      ?predicate layout:position ?pos.
+    }
+  }
+  FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))
+}
+ORDER BY DESC(?pos) ?predicateLabel ?predicate

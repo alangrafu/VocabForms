@@ -1,9 +1,5 @@
 SELECT ?s ?p  WHERE {
-  {
-    GRAPH ?g{
-                ?s ?p <{{uri}}> .
+    GRAPH <{{lodspk.instances}}>{
+      ?s ?p <{{uri}}>
     }
-  }UNION{     
-                ?s ?p <{{uri}}> .
-  }
 }

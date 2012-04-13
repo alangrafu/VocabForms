@@ -101,6 +101,10 @@ background: #DFDFDF;
 padding-left: 10px;
 }
 
+.label{
+ width: 100px;
+}
+
 .rounded-corners-a {
     padding: 10px;
     margin-left: 20px;
