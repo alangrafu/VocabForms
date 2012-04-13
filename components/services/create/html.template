@@ -9,6 +9,7 @@
     var autocompleteUri = "{{lodspk.home}}/instances/";
     var okUri = "{{lodspk.home}}";
     var creationMode = true;
+    var separator = "-";
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
@@ -24,26 +25,26 @@
     <button id="run" class="btn btn-primary btn-large">Save</button><br/>
     <button id="cancel" class="btn btn-primary btn-large">Cancel</button>
     </div>
- 	 <table class="rounded-corners-a">
- 	      <tr><td class="odd"><label for="field_rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" name="field_rdfs:label" id="field_rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
- 	      <tr><td class="even"><label for="field_rdfs:comment">Comment</label></td><td class="even"><input type="text" name="field_rdfs:comment" id="field_rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
+ 	 <table class="rounded-corners-a" id="view">
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
     {% for row in models.data %}
-        <tr><td class="{%cycle "odd" "even"%}"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
+        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
     {% endfor %}
     {% for row in models.object %}
-        <tr><td class="{%cycle "odd" "even"%}"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td class="{%cycle "odd" "even"%}"><input  type="text" name="field_{{ row.predicate.curie }}" id="field_{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" size="100" value=""/></td></tr>
+        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td class="{%cycle "odd" "even"%}"><input  type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" size="100" value=""/></td></tr>
     {% endfor %}
     </table>
  	 <form method="post" id="data">
- 	 <input type="hidden" name="uri" id="uri" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" name="a" id="a" value="{{lodspk.args.arg0}}"/>
- 	 <input type="hidden" name="rdfs:label" id="rdfs:label" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" name="rdfs:comment" id="rdfs:comment" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" id="uri" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" id="a" value="{{lodspk.args.arg0}}"/>
+ 	 <input type="hidden" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
     {% for row in models.data %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
+        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     {% for row in models.object %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="{{ row.predicate.curie }}"  value="" />
+        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     </form>
     <div id="msgok"></div>

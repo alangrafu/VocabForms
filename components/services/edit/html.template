@@ -51,15 +51,15 @@
     {% endfor %}
     </table>
  	 <form method="post" id="data">
- 	 <input type="text" id="uri" value='{{lodspk.args.all|deurifier}}'/><br/>
- 	 <input type="text" id="1-a" value='{%for i in models.values%}{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%endif%}{%endfor%}'/><br/>
- 	 <input type="text" id="1-rdfs:label"  class="datatype" value=""/><br/>
+ 	 <input type="hidden" id="uri" value='{{lodspk.args.all|deurifier}}'/><br/>
+ 	 <input type="hidden" id="1-a" value='{%for i in models.values%}{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%endif%}{%endfor%}'/><br/>
+ 	 <input type="hidden" id="1-rdfs:label"  class="datatype" value=""/><br/>
  	 <input type="text" id="1-rdfs:comment" class="datatype" value=""/><br/>
     {% for row in models.data %}
-        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
+        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     {% for row in models.object %}
-        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" /><br/>
+        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" /><br/>
     {% endfor %}                                                     
     </form>
     <div id="msgok"></div>

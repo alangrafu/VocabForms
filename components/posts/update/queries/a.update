@@ -12,6 +12,7 @@ WITH <{{lodspk.instances}}>
 DELETE {<{{lodspk.args.uri}}> ?s ?p}
 WHERE {<{{lodspk.args.uri}}> ?s ?p}
 
+
 INSERT { 
   GRAPH <{{lodspk.instances}}>{
     <{{lodspk.args.uri}}>

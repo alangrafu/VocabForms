@@ -1,52 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN"
-    "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" {% for i, ns in lodspk.ns %}xmlns:{{i}}="{{ns}}" 
-    {%endfor%}version="XHTML+RDFa 1.0" xml:lang="en">
-    <head>
-    <title>Page about {{lodspk.this.value}}</title>
-    <link href="{{lodspk.home}}css/basic.css" rel="stylesheet" type="text/css" media="screen" />
-    <link rel="alternate" type="application/rdf+xml" title="RDF/XML Version" href="{{lodspk.this.value}}.rdf" />
-    <link rel="alternate" type="text/turtle" title="Turtle Version" href="{{lodspk.this.value}}.ttl" />
-    <link rel="alternate" type="text/plain" title="N-Triples Version" href="{{lodspk.this.value}}.nt" />
-    <link rel="alternate" type="application/json" title="RDFJSON Version" href="{{lodspk.this.value}}.json" />
-  </head>
-  <body about="{{lodspk.this.value}}">
-    <h1>Default view</h1>
-
-    <div style='margin-top: 40px'>
-    <table>
-    <tr><th>Subject</th><th>Predicate</th><th>Object</th></tr>
-    {% for row in models.po %}
-     <tr>
-<td>{%if forloop.first%}<a href='{{lodspk.this.value}}'>{{lodspk.this.curie}}</a>{%endif%}</td>
-     <td style='background-color:#c9f9c9'><a href='{{row.p.value}}'>{{row.p.curie}}</a></td>
-     
-        <td style='background-color:#c9f9c9'>
-        {%if row.o.uri == 1%}
-        <a rev='[{{row.p.curie}}]' href='{{row.o.value}}'>{{row.o.curie}}</a>
-        {%else%}
-        {{row.o.value}}
-        {%endif%}
-        </td>
-
-        </tr>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Edit instance</title>
+    {%include "../../includes/header.inc"%}
+    <script type="text/javascript">
+    var processingUri = "{{lodspk.home}}update";
+    var existsUri = "{{lodspk.home}}exists/";
+    var autocompleteUri = "{{lodspk.home}}/instances/";
+    var creationMode = false;
+    var okUri = "{{lodspk.home}}"; 
+    var separator = "-";
+    var values = {
+    {%set c = 1%}{%for i in models.values%}
+    {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{%if i.object.mirroredUri%}{{i.object.mirroredUri}}{%else%}{{i.object.value}}{%endif%}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
+    {%endfor%}
+    };
+    </script>
+    <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
+    <script type="text/javascript" src="{{lodspk.home}}js/view.js"></script>
+    <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
+<style>
+	.ui-autocomplete-loading { background: white url('{{lodspk.home}}img/ui-anim_basic_16x16.gif') right center no-repeat; }
+	#city { width: 25em; }
+	</style>  </head>
+  <body>
+    <h1>{{uri}}</h1>
+  {%include "../../includes/menu.inc"%}
+    <section>
+ 	 <table class="rounded-corners-a" id="view">     
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input disabled="true" type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input disabled="true" type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
+    {% for row in models.data %}
+        <tr><td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
+        <td  class="{%cycle "odd" "even"%}">
+          <input disabled="true" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" value=""/>
+          <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
+        </td></tr>
     {% endfor %}
-<tr><td></td><td><a href='{{lodspk.this.value}}'>{{lodspk.this.curie}}</a></td><td></td></tr>
-
-    {% for row in models.sp %}
-      <tr>
-        <td style='background-color:#c9f9c9'><a href='{{row.s.value}}'>{{row.s.curie}}</a></td>
-
-        <td style='background-color:#c9f9c9'><a rel='{{row.s.curie}}' href='{{row.p.value}}'>{{row.p.curie}}</a></td>
-<td>{%if forloop.first%}<a href='{{lodspk.this.value}}'>{{lodspk.this.curie}}</a>{%endif%}</td>
-        </tr>
+    {% for row in models.object %}                                         
+        <tr>
+          <td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
+          <td class="{%cycle "odd" "even"%}">
+            <input disabled="true" size="100" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" value=""/>
+            <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
+          </td></tr>
     {% endfor %}
-    <tr><th>Subject</th><th>Predicate</th><th>Object</th></tr>
-
     </table>
-    </div>    
-    
-    <br/>
+    </section>
   </body>
 </html>

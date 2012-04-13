@@ -1,6 +1,4 @@
-$(document).ready(function(){
-    var a = [];
-    function autocomplete(item){
+function autocomplete(item){
       $( item ).autocomplete({
           source: function( request, response ) {
             $.ajax({
@@ -34,7 +32,10 @@ $(document).ready(function(){
       });
     }
     
-    $("input:not(.rdfs\\:Literal)").each(function(i, item){
+
+$(function(){
+    var a = [];
+        $("input:not(.rdfs\\:Literal)").each(function(i, item){
         autocomplete(item);
     });
     
@@ -45,17 +46,20 @@ $(document).ready(function(){
           tokenLeft="<";
           tokenRight=">";
         }
-        hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');    
+        hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');  
+        console.log($(this).attr("id"), hiddenfield);
         if($(this).val().length>0){
           offset = $(this).next().val();
           $("#"+hiddenfield).val(tokenLeft+$(this).val()+tokenRight);
-          console.log("#"+hiddenfield+offset);
-          if(hiddenfield == "rdfs\\:label"){
+          console.log("#"+hiddenfield);
+          if(hiddenfield == "1-rdfs\\:label"){
             if(creationMode){
               $("#uri").val($(this).val().replace(/ /gi, "_"));
             }
-            $("#"+hiddenfield).val(tokenLeft+$(this).val()+tokenRight);
+            $("#1-rdfs\\:label").val(tokenLeft+$(this).val()+tokenRight);
           }
+        }else{
+          $("#"+hiddenfield).val("");
         }
     });
     /*

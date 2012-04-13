@@ -1,8 +1,0 @@
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX vocab: <http://poderopedia.com/vocab/>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-SELECT ?p ?o  WHERE {
-    GRAPH <{{lodspk.instances}}>{
-       <{{uri}}> ?p ?o
-    }
-}

@@ -11,7 +11,7 @@ INSERT {
   GRAPH <{{lodspk.instances}}>{
     <{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}> 
     {%for i, item in lodspk.args%}{%if i != "uri"%}{%if item != ""%}
-          {{i}} {{item|safe}};
+          {{i|explode:"-"|pop}} {{item|safe}};
         {%endif%}{%endif%}{%endfor%}
   }
 } WHERE{

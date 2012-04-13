@@ -7,11 +7,10 @@ $(function(){
         button = "#add_"+x[1];
         prev = "#field_"+(x[0]-1)+separator+x[1];
         clss = $(prev).attr("class");
-        $(button).before('<br/><input size="100" type="text" id="field_'+i+'" class="'+clss+'" value="" />');
+        $(button).before('<br/><input disabled="true" size="100" type="text" id="field_'+i+'" class="'+clss+'" value="" />');
 $("input:not(.rdfs\\:Literal)").each(function(i, item){
         autocomplete(item);
     });        console.log("#field_"+i);
-        $("#data").append('<input size="100" type="text" id="'+i+'" value=""/>');
       }      
       if(visible == "rdf\\:type"){
         $("#1"+separator+"a").val(values[i].value);
