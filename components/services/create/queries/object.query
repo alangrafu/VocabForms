@@ -17,7 +17,7 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange WHERE {
   }
  OPTIONAL{
     GRAPH <http://poderopedia.com/layout>{
-      ?predicate layout:position ?pos.    
+      ?predicate layout:hasLayoutParameterSet [ layout:position ?pos ].    
     }
   }
   FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))

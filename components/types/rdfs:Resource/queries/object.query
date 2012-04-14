@@ -6,6 +6,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX vocab: <http://poderopedia.com/vocab/>
 PREFIX layout: <http://graves.cl/layout/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
   GRAPH <{{lodspk.instances}}>{
@@ -20,12 +21,25 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
     FILTER NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate }
 
   }
-  OPTIONAL{
-    GRAPH <{{lodspk.layout}}>{
-      ?predicate layout:position ?pos.    
+  GRAPH <{{lodspk.layout}}>{
+    {
+    ?predicate 
+      layout:hasLayoutParameterSet [ 
+          layout:position ?pos;
+          layout:scope ?y;
+          layout:shown "true"^^xsd:boolean 
+      ].
+      }UNION{
+        [] a layout:ParameterSet;
+           layout:showNonSpecifiedParameters "true"^^xsd:boolean ;
+           layout:scope ?class .
+        FILTER NOT EXISTS{?predicate layout:hasLayoutParameterSet [ 
+            layout:scope ?y;
+            layout:shown "false"^^xsd:boolean 
+          ]
+        }
     }
-  }
-  FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))
+    }  FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))
 }GROUP BY ?predicate ?predRange ?pos
 ORDER BY DESC(?pos) ?predLabel ?predicate
 
