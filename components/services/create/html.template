@@ -8,8 +8,15 @@
     var existsUri = "{{lodspk.home}}exists/";
     var autocompleteUri = "{{lodspk.home}}/instances/";
     var okUri = "{{lodspk.home}}";
+    var homeUri = "{{lodspk.home}}";
     var creationMode = true;
     var separator = "-";
+    var closeIFrame = function() 
+    {
+    $('#newform').empty().hide();
+    return false;
+    }
+
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
@@ -32,7 +39,10 @@
         <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
     {% endfor %}
     {% for row in models.object %}
-        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td class="{%cycle "odd" "even"%}"><input  type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" size="100" value=""/></td></tr>
+    <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td class="{%cycle "odd" "even"%}"><input  type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" size="100" value=""/>
+    <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
+    <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
+    </td></tr>
     {% endfor %}
     </table>
  	 <form method="post" id="data">
@@ -49,6 +59,7 @@
     </form>
     <div id="msgok"></div>
     <div id="msgerror"></div>
+    <div id="newform" style="display:none" class="overlay-background">
     </section>
   </body>
 </html>

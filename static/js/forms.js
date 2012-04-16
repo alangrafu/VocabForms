@@ -37,6 +37,7 @@ $(function(){
     
     var isInIFrame = (window.location != window.parent.location) ? true : false;
     
+    
     function addAutoComplete(){
       $("input.objecttype").each(function(i, item){
           autocomplete(item);
@@ -94,7 +95,7 @@ $(function(){
      clss = $(this).prev().attr("class");
      id = (parseInt(x[0])+1)+separator+x[1];
      $(this).before('<br/><input size="100" type="text" id="field_'+id+'" class="'+clss+'" value="" />');
-     $("#data").append('<input size="100" type="text" id="'+id+'" value=""/>');
+     $("#data").append('<input size="100" type="hidden" id="'+id+'" value=""/>');
      addAutoComplete();
     });
     
