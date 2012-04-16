@@ -11,7 +11,7 @@ $(function(){
 $("input:not(.rdfs\\:Literal)").each(function(i, item){
         autocomplete(item);
     });        console.log("#field_"+i);
-        $("#data").append('<input size="100" type="text" id="'+i+'" value=""/>');
+        $("#data").append('<input size="100" type="hidden" id="'+i+'" value=""/>');
       }      
       if(visible == "rdf\\:type"){
         $("#1"+separator+"a").val(values[i].value);
