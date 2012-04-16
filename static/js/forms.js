@@ -34,9 +34,25 @@ function autocomplete(item){
     
 
 $(function(){
-    var a = [];
-        $("input:not(.rdfs\\:Literal)").each(function(i, item){
-        autocomplete(item);
+    
+    var isInIFrame = (window.location != window.parent.location) ? true : false;
+    
+    function addAutoComplete(){
+      $("input.objecttype").each(function(i, item){
+          autocomplete(item);
+      });
+    }
+    addAutoComplete();
+        
+    $("body").on('click', 'button.new-entity', function(){        
+        $("#newform").show();
+        var iframeUri = homeUri+"create/"+($(this).attr("id").replace("new_", ""));
+        $("#newform").html('<div style="height:75px"></div><div class="overlay-dialog"><iframe class="overlay-iframe overlay-element" frameborder="0" src="'+iframeUri+'"></iframe><button class="btn btn-primary btn-large close">Close</button></div>');
+
+    });
+    
+    $("body").on('click', 'button.close', function(){
+        $("#newform").hide();    
     });
     
     $("#view").on('change', "input.visible", function(){
@@ -79,6 +95,7 @@ $(function(){
      id = (parseInt(x[0])+1)+separator+x[1];
      $(this).before('<br/><input size="100" type="text" id="field_'+id+'" class="'+clss+'" value="" />');
      $("#data").append('<input size="100" type="text" id="'+id+'" value=""/>');
+     addAutoComplete();
     });
     
     $( "#msgok" ).dialog({
@@ -102,6 +119,10 @@ $(function(){
 		});
 		
 		$("#cancel").click(function(){
+		    if(isInIFrame){
+		      window.parent.closeIFrame();
+		      return;
+		    }
 		  history.back(-1);
 		});
 		
@@ -160,6 +181,10 @@ $(function(){
           success: function(data) {
             console.log("Data status:", data.status);
             if(parseInt(data.status) >= 200 && parseInt(data.status) < 300){
+              if(isInIFrame){
+                window.parent.closeIFrame();
+                return;
+              }
               $("#msgok").html("Ok").dialog("open");
             }else{
               $("#msgerror").attr("title", "Error").html("Something happened when submitting the data");
@@ -173,4 +198,6 @@ $(function(){
           }
       });
     }
+    
+    
 });

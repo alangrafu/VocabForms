@@ -8,13 +8,20 @@
     var existsUri = "{{lodspk.home}}exists/";
     var autocompleteUri = "{{lodspk.home}}/instances/";
     var creationMode = false;
-    var okUri = "{{lodspk.home}}"; 
+    var okUri = "{{lodspk.home}}instances/{{lodspk.args.arg0}}"; 
+    var homeUri = "{{lodspk.home}}"; 
     var separator = "-";
     var values = {
     {%set c = 1%}{%for i in models.values%}
     {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{%if i.object.mirroredUri%}{{i.object.mirroredUri}}{%else%}{{i.object.value}}{%endif%}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
     {%endfor%}
     };
+      var closeIFrame = function() 
+  {
+    $('#newform').empty().hide();
+    return false;
+  }
+
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/edit.js"></script>
@@ -47,6 +54,7 @@
           <td class="{%cycle "odd" "even"%}">
             <input size="100" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" value=""/>
             <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
+            <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
           </td></tr>
     {% endfor %}
     </table>
@@ -54,7 +62,7 @@
  	 <input type="hidden" id="uri" value='{{lodspk.args.all|deurifier}}'/><br/>
  	 <input type="hidden" id="1-a" value='{%for i in models.values%}{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%endif%}{%endfor%}'/><br/>
  	 <input type="hidden" id="1-rdfs:label"  class="datatype" value=""/><br/>
- 	 <input type="text" id="1-rdfs:comment" class="datatype" value=""/><br/>
+ 	 <input type="hidden" id="1-rdfs:comment" class="datatype" value=""/><br/>
     {% for row in models.data %}
         <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
@@ -64,6 +72,8 @@
     </form>
     <div id="msgok"></div>
     <div id="msgerror"></div>
+    <div id="newform" style="display:none" class="overlay-background">
+    </div>
     </section>
   </body>
 </html>

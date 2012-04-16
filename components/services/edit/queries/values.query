@@ -1,10 +1,4 @@
-{%for h in base.header %}
-PREFIX {{h.prefix}}: <{{h.ns}}>
-{%endfor%}
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX local: <http://poderopedia.com/vocab/>
+{{lodspk.prefixes}}
 
 SELECT DISTINCT ?predicate ?object ?objectLabel WHERE {
   GRAPH <{{lodspk.instances}}>{

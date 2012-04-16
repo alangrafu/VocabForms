@@ -1,3 +1,5 @@
+{{lodspk.prefixes}}
+
 SELECT ?p WHERE {
   GRAPH <{{lodspk.instances}}>{
     {

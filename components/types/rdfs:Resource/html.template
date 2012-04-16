@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Edit instance</title>
+    <title>Instance</title>
     {%include "../../includes/header.inc"%}
     <script type="text/javascript">
     var processingUri = "{{lodspk.home}}update";
@@ -24,10 +24,13 @@
 	#city { width: 25em; }
 	</style>  </head>
   <body>
-    <h1>{{uri}}</h1>
+    <h1>{{lodspk.this.local}}</h1>
   {%include "../../includes/menu.inc"%}
     <section>
- 	 <table class="rounded-corners-a" id="view">     
+      <div class="buttons">
+        <a href='{{lodspk.home}}edit/{{uri|urifier}}'><button class="btn btn-primary btn-large">Edit</button></a>
+      </div>
+ 	  <table class="rounded-corners-a" id="view">     
  	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input disabled="true" type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
  	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input disabled="true" type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
     {% for row in models.data %}

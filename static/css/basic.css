@@ -46,7 +46,7 @@ input{
   padding-left:20px;
 }
 
-input.rdfs\:Literal{
+input.datatype{
   background-image:url('');
   padding-left:20px;
 }
@@ -127,3 +127,35 @@ padding-left: 10px;
     -khtml-border-radius: 20px;
     border-radius: 20px;
 }
+
+.overlay-background{
+  position: fixed;
+  height:100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  background: transparent url(/bio/img/background.png) repeat;
+}
+
+.overlay-element{
+  z-index: 550;
+background: white
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.overlay-iframe{
+  height: 80%;
+  width: 80%;
+}
+.overlay-dialog{
+
+background: white;
+width: 80%;
+margin-left: auto;
+margin-right: auto;
+}
+

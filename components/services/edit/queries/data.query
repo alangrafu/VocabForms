@@ -1,17 +1,10 @@
-{%for h in base.header %}
-PREFIX {{h.prefix}}: <{{h.ns}}>
-{%endfor%}
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX vocab: <http://poderopedia.com/vocab/>
-PREFIX layout: <http://graves.cl/layout/>
+{{lodspk.prefixes}}
 
 SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{lodspk.args.all|deurifier}}> a ?class .
   }
-  GRAPH <{{lodspk.g}}>{  
+  GRAPH <{{lodspk.vocab}}>{  
     ?class rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
     FILTER( NOT EXISTS { ?predicate a owl:ObjectProperty } &&
@@ -21,9 +14,15 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
     OPTIONAL { ?predicate rdfs:label ?pl }
     OPTIONAL { ?predicate rdfs:range ?predRange }    
   }
-  OPTIONAL{
-    GRAPH <{{lodspk.layout}}>{
-      ?predicate layout:hasLayoutParameterSet [ layout:position ?pos ].    
+  GRAPH <{{lodspk.layout}}>{
+    {
+      ?predicate layout:hasLayoutParameterSet ?lps. 
+      ?lps layout:shown "true"^^xsd:boolean .
+      OPTIONAL{ ?lps layout:position ?pos }
+    }UNION{
+      FILTER NOT EXISTS{
+      ?predicate layout:hasLayoutParameterSet ?x 
+      }
     }
   }
   FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))

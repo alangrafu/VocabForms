@@ -1,8 +1,5 @@
-{%for h in lodspk.header %}
-PREFIX {{h.prefix}}: <{{h.ns}}>
-{%endfor%}
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+{{lodspk.prefixes}}
+
 SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
     GRAPH <{{lodspk.instances}}> {
       ?resource rdf:type/rdfs:subClassOf* {{lodspk.args.arg0}} .
@@ -11,7 +8,7 @@ SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
       FILTER(regex(?l, "{{lodspk.args.arg1}}", "i"))
       {%endif%}
     }
-    GRAPH <{{lodspk.g}}>{
+    GRAPH <{{lodspk.vocab}}>{
       ?p rdfs:subPropertyOf* rdfs:label .
     }
 }GROUP BY ?resource
