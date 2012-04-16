@@ -19,6 +19,7 @@ $conf['ns']['local']   = $conf['mirror_external_uris'];
 $conf['ns']['poder']   = $conf['ns']['local'];
 $conf['ns']['base']   = 'http://alia/bio/';
 
-$lodspk['g'] = 'http://poderopedia.com/vocab';
+$lodspk['vocab'] = 'http://poderopedia.com/vocab';
 $lodspk['instances'] = 'http://poderopedia/instances';
+$lodspk['layout'] = 'http://poderopedia/layout';
 ?>
