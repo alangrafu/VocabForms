@@ -9,7 +9,7 @@
   <body>
 {%include "../../includes/menu.inc"%}
 
-<div class="row">
+<!--div class="row">
   <div class="span3 offset1 well"><h1><a href='instances/foaf:Person'>Personas</a></h1><a href="create/foaf:Person" ><button class="btn btn-primary">Crear nueva persona</button></a></div>
   <div class="span3 offset1 well"><h1><a href='instances/vocab:Company'>Empresas</a></h1><a href="create/vocab:Company" ><button class="btn btn-primary">Crear nueva empresa</button></a></div>
   <div class="span3 offset1 well"><h1><a href='instances/vocab:AcademicOrganization'>Organizaciones Académica</a></h1><a href="create/vocab:Organization" ><button class="btn btn-primary">Crear nueva organización</button></a></div>
@@ -23,7 +23,7 @@
           <li><a href="{{lodspk.home}}create/vocab:PoliticalConnection">Agregar conexión política</a></li>
   </ul>
 </div></div>
-</div>
+</div-->
 
   </body>
 </html>
