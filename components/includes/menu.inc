@@ -48,10 +48,20 @@
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="{{lodspk.home}}#">Conexiones<b class="caret"></b></a>
         <ul class="dropdown-menu">
+          <li><a href="{{lodspk.home}}instances/vocab:EconomicConnection">Listar conexiones económicas</a></li>
           <li><a href="{{lodspk.home}}create/vocab:EconomicConnection">Agregar conexión económica</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:AcademicConnection">Listar conexiones académicas</a></li>
           <li><a href="{{lodspk.home}}create/vocab:AcademicConnection">Agregar conexión académica</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:BelongingConnection">Listar conexiones de pertenencias</a></li>
           <li><a href="{{lodspk.home}}create/vocab:BelongingConnection">Agregar conexión de pertenencia</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:PoliticalConnection">Listar conexiones políticas</a></li>
           <li><a href="{{lodspk.home}}create/vocab:PoliticalConnection">Agregar conexión política</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:NewsEventConnection">Listar conexiones a evento noticiosos</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:NewsEventConnection">Agregar conexión a evento noticioso</a></li>
         </ul>
       </li>
     </ul>

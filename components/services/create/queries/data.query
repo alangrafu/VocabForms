@@ -1,6 +1,6 @@
 {{lodspk.prefixes}}
 
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?plEn) AS ?predLabelEn) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos WHERE {
   GRAPH <{{lodspk.vocab}}>{  
     {{lodspk.args.arg0}}  rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
@@ -9,7 +9,6 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?plEn) AS ?pred
             str(?predicate) != "http://www.w3.org/2000/01/rdf-schema#comment" &&
             NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate })
     OPTIONAL { ?predicate rdfs:label ?pl }
-    OPTIONAL { ?predicate rdfs:label ?plen. FILTER(LANG(?plen) = "en") }
     OPTIONAL { ?predicate rdfs:label ?ples. FILTER(LANG(?plen) = "es") }
     OPTIONAL { ?predicate rdfs:range ?predRange }    
   }

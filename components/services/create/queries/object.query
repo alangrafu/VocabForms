@@ -1,12 +1,11 @@
 {{lodspk.prefixes}}
 
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?plen) AS ?predLabelEn) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes WHERE {
   GRAPH <{{lodspk.vocab}}>{  
     {{lodspk.args.arg0}}  rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
                a owl:ObjectProperty. 
     OPTIONAL { ?predicate rdfs:label ?pl }
-    OPTIONAL { ?predicate rdfs:label ?plen. FILTER(LANG(?plen) = "en") }
     OPTIONAL { ?predicate rdfs:label ?ples. FILTER(LANG(?plen) = "es") }
     OPTIONAL { ?predicate rdfs:range ?predRange }
     FILTER NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate }

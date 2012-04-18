@@ -1,0 +1,17 @@
+{{lodspk.prefixes}}
+
+SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
+    GRAPH <{{lodspk.vocab}}>{
+      ?class rdfs:subClassOf* {{lodspk.args.arg0}}
+    }
+    GRAPH <{{lodspk.instances}}> {
+      ?resource rdf:type/rdfs:subClassOf* ?class .
+      OPTIONAL{ ?resource ?p ?l .}
+      {%if lodspk.args.arg1%}
+      FILTER(regex(?l, "{{lodspk.args.arg1}}", "i"))
+      {%endif%}
+    }
+    GRAPH <{{lodspk.vocab}}>{
+      ?p rdfs:subPropertyOf* rdfs:label .
+    }
+}GROUP BY ?resource

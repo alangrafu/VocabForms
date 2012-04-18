@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Instances of {{lodspk.args.arg0}}</title>
+{%include "../../includes/header.inc"%}
+  </head>
+  <body>
+{%include "../../includes/menu.inc"%}
+<div class="row">
+  <div class="span3 offset1"><h1>Entidad</h1></div>
+  <div class="span2"><h1>Operaciones</h1></div>
+  
+</div>
+<hr/>
+    {% for row in models.main %}
+<div class="row">
+  <div class="span3 offset1"><a href="{{ row.resource.value }}"><h3>{%if row.label.value%}{{row.label.value}}{%else%}{{row.resource.curie}}{%endif%}</a></h3></div>
+  <div class="span1"><a href="{{lodspk.home}}edit/{{ row.resource.mirroredUri|urifier }}"><button class="btn btn-primary">Edit</button></a><a href="{{lodspk.home}}delete/{{ row.resource.mirroredUri|urifier }}"></div>
+  <div class="span1"><button class="btn btn-primary">Delete</button></a></div>
+</div>
+<hr/>
+    {% endfor %}
+    {%if models.main|length < 1%}
+    <div class="alert alert-block">
+  <h4 class="alert-heading">Atención!</h4>
+  No se han encontrado entidades de este tipo
+</div>
+{%endif%}
+  </body>
+</html>

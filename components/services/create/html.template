@@ -6,7 +6,7 @@
     <script type="text/javascript">
     var processingUri = "{{lodspk.home}}processing";
     var existsUri = "{{lodspk.home}}exists/";
-    var autocompleteUri = "{{lodspk.home}}/instances/";
+    var autocompleteUri = "{{lodspk.home}}/search/";
     var okUri = "{{lodspk.home}}";
     var homeUri = "{{lodspk.home}}";
     var creationMode = true;

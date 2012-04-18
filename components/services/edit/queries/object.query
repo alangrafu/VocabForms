@@ -1,6 +1,6 @@
 {{lodspk.prefixes}}
 
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{lodspk.args.all|deurifier}}> a ?class .
   }
@@ -9,15 +9,19 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
     ?predicate rdfs:domain ?y ;
                a owl:ObjectProperty. 
     OPTIONAL { ?predicate rdfs:label ?pl }
+    OPTIONAL { ?predicate rdfs:label ?ples. FILTER(LANG(?plen) = "es") }
     OPTIONAL { ?predicate rdfs:range ?predRange }
     FILTER NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate }
 
   }
-  GRAPH <http://poderopedia.com/layout>{
-      ?predicate layout:hasLayoutParameterSet [
-         layout:position ?pos 
-      ]
-  FILTER(?pos >= 0)
+  GRAPH <{{lodspk.layout}}>{
+  OPTIONAL{
+      ?predicate layout:hasLayoutParameterSet ?lps .
+      ?lps layout:uriRelated ?y .
+      OPTIONAL{ ?lps layout:position ?pos } 
+      OPTIONAL{ ?lps layout:hasClass ?classes } 
+  }
+      MINUS{?lps layout:display false.}
   }
 }GROUP BY ?predicate ?predRange ?pos
 ORDER BY DESC(?pos) ?predLabel ?predicate
