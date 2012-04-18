@@ -11,17 +11,31 @@
         </ul>
       </li>
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="{{lodspk.home}}#">Empresas<b class="caret"></b></a>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Organizaciones<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a href="{{lodspk.home}}instances/vocab:Company">Listado de Empresas</a></li>
+          <li><a href="{{lodspk.home}}instances/vocab:AcademicOrganization">Listado de Organizaciones académicas</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:AcademicOrganization">Agregar nueva organización académica</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:Company">Listado de empresa</a></li>
           <li><a href="{{lodspk.home}}create/vocab:Company">Agregar nueva empresa</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="{{lodspk.home}}#">Organizaciones<b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="{{lodspk.home}}instances/vocab:Organization">Listado de Organizaciones</a></li>
-          <li><a href="{{lodspk.home}}create/vocab:Organization">Agregar nueva organización</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:NonGovernmentalOrganization">Listado de organizaciones no gubernamental</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:NonGovernmentalOrganization">Agregar nueva organización no gubernamental</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:RestrictedAccessOrganization">Listado de organizaciones de acceso restringido</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:RestrictedAccessOrganization">Agregar nueva organización de acceso restringido</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:InternationalOrganization">Listado de organizaciones internacional</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:InternationalOrganization">Agregar nueva organización internacional</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:ReligiousOrganization">Listado de organizaciones religiosas</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:ReligiousOrganization">Agregar nueva organización religiosas</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:ProgrammaticOrganization">Listado de organizaciones programáticas</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:ProgrammaticOrganization">Agregar nueva organización programática</a></li>
+          <li class="divider"></li>
+          <li><a href="{{lodspk.home}}instances/vocab:PoliticalOrganization">Listado de organizaciones políticas</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:PoliticalOrganization">Agregar nueva organización política</a></li>
         </ul>
       </li>
       <li class="dropdown">
@@ -37,7 +51,7 @@
           <li><a href="{{lodspk.home}}create/vocab:EconomicConnection">Agregar conexión económica</a></li>
           <li><a href="{{lodspk.home}}create/vocab:AcademicConnection">Agregar conexión académica</a></li>
           <li><a href="{{lodspk.home}}create/vocab:BelongingConnection">Agregar conexión de pertenencia</a></li>
-          <li><a href="{{lodspk.home}}create/vocab:BelongingConnection">Agregar conexión de pertenencia</a></li>
+          <li><a href="{{lodspk.home}}create/vocab:PoliticalConnection">Agregar conexión política</a></li>
         </ul>
       </li>
     </ul>

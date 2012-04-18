@@ -97,6 +97,7 @@ $(function(){
      $(this).before('<br/><input size="100" type="text" id="field_'+id+'" class="'+clss+'" value="" />');
      $("#data").append('<input size="100" type="hidden" id="'+id+'" value=""/>');
      addAutoComplete();
+     applyClasses();
     });
     
     $( "#msgok" ).dialog({
@@ -126,6 +127,7 @@ $(function(){
 		    }
 		  history.back(-1);
 		});
+		
 		
     $("#run").click(function(){
         var currentButton = "#"+$(this).attr("id");
@@ -200,5 +202,10 @@ $(function(){
       });
     }
     
+    function applyClasses(){
+    		$("input.disabled").attr("disabled", "disabled");
+    }
     
+    applyClasses();
+
 });

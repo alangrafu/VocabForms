@@ -1,29 +1,26 @@
 {{lodspk.prefixes}}
 
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?plen) AS ?predLabelEn) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes WHERE {
   GRAPH <{{lodspk.vocab}}>{  
     {{lodspk.args.arg0}}  rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
                a owl:ObjectProperty. 
     OPTIONAL { ?predicate rdfs:label ?pl }
+    OPTIONAL { ?predicate rdfs:label ?plen. FILTER(LANG(?plen) = "en") }
+    OPTIONAL { ?predicate rdfs:label ?ples. FILTER(LANG(?plen) = "es") }
     OPTIONAL { ?predicate rdfs:range ?predRange }
     FILTER NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate }
-
+       
   }
-  GRAPH <{{lodspk.layout}}>{
-    { 
+  GRAPH <http://poderopedia.com/layout>{
+  OPTIONAL{
       ?predicate layout:hasLayoutParameterSet ?lps .
-      ?lps layout:uriRelated ?y;
-           layout:shown true .
-      OPTIONAL{
-        ?lps layout:position ?pos.      
-      }
-    }UNION{
-      FILTER NOT EXISTS{
-       ?predicate layout:hasLayoutParameterSet []
-      }
-    }
+      ?lps layout:uriRelated {{lodspk.args.arg0}} .
+      OPTIONAL{ ?lps layout:position ?pos } 
+      OPTIONAL{ ?lps layout:hasClass ?classes } 
   }
-}GROUP BY ?predicate ?predRange ?pos
+      MINUS{?lps layout:display false.}
+  }
+}GROUP BY ?predicate ?predRange ?pos ?classes
 ORDER BY DESC(?pos) ?predLabel ?predicate
 

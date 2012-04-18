@@ -36,10 +36,10 @@
  	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
  	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
     {% for row in models.data %}
-        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
+        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
     {% endfor %}
     {% for row in models.object %}
-    <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td><td class="{%cycle "odd" "even"%}"><input  type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" size="100" value=""/>
+    <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td><td class="{%cycle "odd" "even"%}"><input class="{{row.predRange.curie}} objecttype rounded-corners visible {{row.classes.value}}" type="text" id="field_1-{{ row.predicate.curie }}" size="100" value=""/>
     <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
     <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
     </td></tr>
