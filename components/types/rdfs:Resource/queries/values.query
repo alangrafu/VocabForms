@@ -1,8 +1,8 @@
 {{lodspk.prefixes}}
 
-SELECT DISTINCT ?predicate ?object ?objectLabel WHERE {
+SELECT DISTINCT ?predicate ?object (SAMPLE(?ol) AS ?objectLabel) WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{uri}}> ?predicate ?object .
-      OPTIONAL{ ?object rdfs:label ?objectLabel .}
+      OPTIONAL{ ?object rdfs:label ?ol .}
   }
-}
+}GROUP BY ?object ?objectLabel ?predicate

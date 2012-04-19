@@ -14,18 +14,15 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
     OPTIONAL { ?predicate rdfs:label ?pl }
     OPTIONAL { ?predicate rdfs:range ?predRange }    
   }
-  GRAPH <{{lodspk.layout}}>{
-    {
-      ?predicate layout:hasLayoutParameterSet ?lps. 
-      ?lps layout:shown "true"^^xsd:boolean .
-      OPTIONAL{ ?lps layout:position ?pos }
-    }UNION{
-      FILTER NOT EXISTS{
-      ?predicate layout:hasLayoutParameterSet ?x 
-      }
-    }
+  GRAPH <http://poderopedia.com/layout>{
+  OPTIONAL{
+      ?predicate layout:hasLayoutParameterSet ?lps .
+      ?lps layout:uriRelated ?y .
+      OPTIONAL{ ?lps layout:position ?pos } 
+      OPTIONAL{ ?lps layout:hasClass ?classes } 
   }
-  FILTER((bound(?pos) && ?pos >= 0)||(!bound(?pos)))
+      MINUS{?lps layout:display false.}
+  }
 }GROUP BY ?predicate ?predRange ?pos
 ORDER BY DESC(?pos) ?predLabel ?predicate
 
