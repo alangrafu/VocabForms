@@ -55,6 +55,17 @@ input.datatype{
   float:right;
   margin-right: 20px;
 }
+span.visible{
+padding-left: 20px;
+padding-right: 20px;
+width: 200px;
+    border: solid;
+    border-width: 2px;
+     -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -khtml-border-radius: 20px;
+    border-radius: 20px;
+}
 
 button{ margin:10px;}
 /*

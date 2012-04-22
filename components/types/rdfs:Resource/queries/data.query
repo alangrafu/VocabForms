@@ -1,5 +1,3 @@
-{{lodspk.prefixes}}
-
 SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) ?predRange ?pos WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{uri}}> a ?class .

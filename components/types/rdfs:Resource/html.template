@@ -31,12 +31,12 @@
         <a href='{{lodspk.home}}edit/{{uri|urifier}}'><button class="btn btn-primary btn-large">Edit</button></a>
       </div>
  	  <table class="rounded-corners-a" id="view">     
- 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input disabled="true" type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
- 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input disabled="true" type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="50"/></td></tr>
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><span id="field_1-rdfs:label" class="rdfs:Literal visible" ></span></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><span id="field_1-rdfs:comment" class="rdfs:Literal visible"></span></td></tr>
     {% for row in models.data %}
         <tr><td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
         <td  class="{%cycle "odd" "even"%}">
-          <input disabled="true" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" value=""/>
+          <span id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} visible" ></span>
           <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
         </td></tr>
     {% endfor %}
@@ -44,11 +44,19 @@
         <tr>
           <td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
           <td class="{%cycle "odd" "even"%}">
-            <input disabled="true" size="100" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" value=""/>
+            <span id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} visible"></span>
             <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
           </td></tr>
     {% endfor %}
     </table>
     </section>
+ 	  <table class="rounded-corners-a">
+ 	  {%for i in models.connections%}
+ 	  {%ifchanged i.classLabel.value%}
+ 	  <tr><th>{{i.classLabel.value}}</th></tr>
+ 	  {%endifchanged%}
+ 	  <tr><td><a href='{{i.connection.value}}'>{{i.connectionLabel.value}}</a></td></tr>
+ 	  {%endfor%}
+ 	  </table>
   </body>
 </html>

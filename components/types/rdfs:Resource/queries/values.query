@@ -1,5 +1,3 @@
-{{lodspk.prefixes}}
-
 SELECT DISTINCT ?predicate ?object (SAMPLE(?ol) AS ?objectLabel) WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{uri}}> ?predicate ?object .
