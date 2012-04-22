@@ -1,0 +1,11 @@
+SELECT DISTINCT ?connection ?connectionLabel (SAMPLE(?cl) AS ?classLabel) WHERE {
+  GRAPH <{{lodspk.instances}}>{
+      ?connection ?p <{{uri}}> ;
+                  a ?class;
+                  rdfs:label ?connectionLabel .
+  }
+  GRAPH <http://poderopedia.com/vocab>{
+    ?class rdfs:subClassOf* vocab:Connection;
+           rdfs:label ?cl .
+  }
+}GROUP BY ?connectionLabel ?connection
