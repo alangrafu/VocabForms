@@ -15,6 +15,11 @@
     {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{{i.object.value}}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
     {%endfor%}
     };
+    var revvalues = {
+    {%set c = 1%}{%for i in models.revvalues%}
+    {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{{i.object.value}}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
+    {%endfor%}
+    };
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/view.js"></script>
@@ -31,14 +36,16 @@
         <a href='{{lodspk.home}}edit/{{uri|urifier}}'><button class="btn btn-primary btn-large">Edit</button></a>
       </div>
  	  <table class="rounded-corners-a" id="view">     
- 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><span id="field_1-rdfs:label" class="rdfs:Literal visible" ></span></td></tr>
- 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><span id="field_1-rdfs:comment" class="rdfs:Literal visible"></span></td></tr>
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><span id="field_1-rdfs:label" class="rdfs:Literal visible" ></span></td><td class="odd"></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><span id="field_1-rdfs:comment" class="rdfs:Literal visible"></span></td><td class="even"></td></tr>
     {% for row in models.data %}
         <tr><td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
         <td  class="{%cycle "odd" "even"%}">
           <span id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} visible" ></span>
           <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
-        </td></tr>
+        </td> <td class="{%cycle "odd" "even"%}">
+          </td>
+          </tr>
     {% endfor %}
     {% for row in models.object %}                                         
         <tr>
@@ -46,6 +53,10 @@
           <td class="{%cycle "odd" "even"%}">
             <span id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} visible"></span>
             <button id="add_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
+          </td>
+          <td class="{%cycle "odd" "even"%}">
+            <span id="rev_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} visible"></span>
+            <button id="revadd_{{ row.predicate.curie }}" class="btn-mini btn disabled">+</button>
           </td></tr>
     {% endfor %}
     </table>
