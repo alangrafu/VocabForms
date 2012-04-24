@@ -29,4 +29,20 @@ $(function(){
         }
       }
     };
+    for(i in revvalues){
+      visible = i.replace(":", '\\:');
+      offset = revvalues[i].offset;
+      x = visible.split(separator);
+      if(parseInt(x[0])>1){
+        button = "#revadd_"+x[1];
+        prev = "#rev_"+(x[0]-1)+separator+x[1];
+        clss = $(prev).attr("class");
+        $(button).before('<br/><span id="rev_'+i+'" class="'+clss+'"></span>');
+      }      
+      myLabel = revvalues[i].value;
+      if(revvalues[i].label.length > 0){
+        myLabel = revvalues[i].label;
+      }
+      $("#rev_"+visible).html("<a href='"+revvalues[i].value+"'>"+myLabel+"</a>");      
+    };
 });
