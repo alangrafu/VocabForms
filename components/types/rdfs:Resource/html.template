@@ -12,7 +12,7 @@
     var separator = "-";
     var values = {
     {%set c = 1%}{%for i in models.values%}
-    {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{%if i.object.mirroredUri%}{{i.object.mirroredUri}}{%else%}{{i.object.value}}{%endif%}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
+    {%ifchanged i.predicate.curie %}{%set c = 1%}{%else%}{%set c = c+1%}{%endifchanged%}  {%if forloop.counter0 > 0 %},{%endif%}"{{c}}-{{i.predicate.curie}}": { "value": "{%if i.predicate.curie == "rdf:type"%}{{i.object.curie}}{%else%}{{i.object.value}}{%endif%}", "label": "{{i.objectLabel.value}}", "is_object": {%if i.object.uri%}true{%else%}false{%endif%} }
     {%endfor%}
     };
     </script>

@@ -23,6 +23,6 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?pred
   }
       MINUS{?lps layout:display false.}
   }
-}GROUP BY ?predicate ?predRange ?pos
+}GROUP BY ?predicate ?predRange ?pos ?predLabel ?predLabelEs
 ORDER BY DESC(?pos) ?predLabel ?predicate
 

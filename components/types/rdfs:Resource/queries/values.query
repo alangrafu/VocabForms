@@ -1,6 +1,12 @@
 SELECT DISTINCT ?predicate ?object (SAMPLE(?ol) AS ?objectLabel) WHERE {
   GRAPH <{{lodspk.instances}}>{
+    {
       <{{uri}}> ?predicate ?object .
       OPTIONAL{ ?object rdfs:label ?ol .}
+    }UNION{
+      ?object ?predicate <{{uri}}>
+      OPTIONAL{ ?object rdfs:label ?ol .}
+    }
   }
 }GROUP BY ?object ?objectLabel ?predicate
+ORDER BY ?predicate

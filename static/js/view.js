@@ -7,11 +7,7 @@ $(function(){
         button = "#add_"+x[1];
         prev = "#field_"+(x[0]-1)+separator+x[1];
         clss = $(prev).attr("class");
-        $(button).before('<br/><input size="100" type="text" id="field_'+i+'" class="'+clss+'" value="" />');
-$("input:not(.rdfs\\:Literal)").each(function(i, item){
-        autocomplete(item);
-    });        console.log("#field_"+i);
-        $("#data").append('<input size="100" type="hidden" id="'+i+'" value=""/>');
+        $(button).before('<br/><span id="field_'+i+'" class="'+clss+'"></span>');
       }      
       if(visible == "rdf\\:type"){
         $("#1"+separator+"a").html(values[i].value);
