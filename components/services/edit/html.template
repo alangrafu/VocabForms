@@ -44,7 +44,7 @@
     {% for row in models.data %} 
         <tr><td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
         <td  class="{%cycle "odd" "even"%}">
-          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" value=""/>
+          <{%if row.htmlElement.value%}{{row.htmlElement.value}}{%else%}input type="text" value=""{%endif%} id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible"></{%if row.htmlElement.value%}{{row.htmlElement.value}}{%else%}input{%endif%}>
           <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
         </td></tr>
     {% endfor %}
@@ -52,7 +52,7 @@
         <tr>
           <td class="{%cycle "odd" "even"%} label"><label for="field_{{ row.predicate.curie }}">{{row.predLabel.value}}</label></td>
           <td class="{%cycle "odd" "even"%}">
-            <input size="100" type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible" value=""/>
+            <{%if row.htmlElement.value%}{{row.htmlElement.value}}{%else%}input type="text" value=""{%endif%} id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} objecttype rounded-corners visible"></{%if row.htmlElement.value%}{{row.htmlElement.value}}{%else%}input{%endif%}>
             <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
             <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
           </td></tr>

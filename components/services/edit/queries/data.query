@@ -1,6 +1,4 @@
-{{lodspk.prefixes}}
-
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?element WHERE {
   GRAPH <{{lodspk.instances}}>{
       <{{lodspk.args.all|deurifier}}> a ?class .
   }
@@ -20,10 +18,11 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?pred
       ?predicate layout:hasLayoutParameterSet ?lps .
       ?lps layout:uriRelated ?y .
       OPTIONAL{ ?lps layout:position ?pos } 
-      OPTIONAL{ ?lps layout:hasClass ?classes } 
+      OPTIONAL{ ?lps layout:htmlClass ?classes } 
+      OPTIONAL{ ?lps layout:htmlElement ?element } 
   }
       MINUS{?lps layout:display false.}
   }
-}GROUP BY ?predicate ?predRange ?pos
+}GROUP BY ?predicate ?predRange ?pos ?element
 ORDER BY DESC(?pos) ?predLabel ?predicate
 
