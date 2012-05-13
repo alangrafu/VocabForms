@@ -20,6 +20,7 @@
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
+    <script type="text/javascript" src="{{lodspk.home}}js/fillers.js"></script>
 <style>
 	.ui-autocomplete-loading { background: white url('{{lodspk.home}}img/ui-anim_basic_16x16.gif') right center no-repeat; }
 	#city { width: 25em; }
@@ -33,28 +34,53 @@
     <button id="cancel" class="btn btn-primary btn-large">Cancel</button>
     </div>
  	 <table class="rounded-corners-a" id="view">
- 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
- 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><input type="text" id="field_1-rdfs:comment" class="rdfs:Literal datatype rounded-corners visible" value="" size="100"/></td></tr>
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"/></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><textarea cols="20" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea></td></tr>
     {% for row in models.data %}
-        <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td><td  class="{%cycle "odd" "even"%}"><input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype rounded-corners visible" size="100" value=""/></td></tr>
+        <tr>
+          <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
+          <td  class="{%cycle "odd" "even"%}">
+          {%if row.htmlelement.value == "select"%}
+          <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible"></select>
+          <script type="text/javascript">
+          $(document).ready(function(){
+          fillSelectForm("field_1-{{ row.predicate.curie }}", "{{row.predRange.curie}}");
+          });
+          </script>
+          {%else%}
+          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible" size="100" value=""/>
+          {%endif%}
+          </td></tr>
     {% endfor %}
     {% for row in models.object %}
-    <tr><td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td><td class="{%cycle "odd" "even"%}"><input class="{{row.predRange.curie}} objecttype rounded-corners visible {{row.classes.value}}" type="text" id="field_1-{{ row.predicate.curie }}" size="100" value=""/>
+    <tr>
+      <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
+      <td class="{%cycle "odd" "even"%}">
+          {%if row.htmlelement.value == "select"%}
+          <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible"></select>
+          <script type="text/javascript">
+          $(document).ready(function(){
+          fillSelectForm("field_1-{{ row.predicate.curie }}", "{{row.predRange.curie}}");
+          });
+          </script>
+          {%else%}
+          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible" size="100" value=""/>
     <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
     <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
+          {%endif%}
     </td></tr>
     {% endfor %}
     </table>
  	 <form method="post" id="data">
- 	 <input type="hidden" id="uri" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" id="a" value="{{lodspk.args.arg0}}"/>
- 	 <input type="hidden" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="text" id="uri" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="text" id="a" value="{{lodspk.args.arg0}}"/>
+ 	 <input type="text" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="text" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
     {% for row in models.data %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
+        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     {% for row in models.object %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
+        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     </form>
     <div id="msgok"></div>

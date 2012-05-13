@@ -56,6 +56,7 @@ $(function(){
         $("#newform").hide();    
     });
     
+    //For regular input 
     $("#view").on('change', "input.visible", function(){
         tokenLeft = '"';
         tokenRight = '"';
@@ -79,16 +80,28 @@ $(function(){
           $("#"+hiddenfield).val("");
         }
     });
-    /*
-    $("input.objecttype").live('change', function(){
+    
+    
+    //For selects
+    $("#view").on('change', "select.visible", function(){
+        tokenLeft="<";
+        tokenRight=">";
         hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');  
-        if($(this).val() != ""){
-        $("#"+hiddenfield).val("<"+$(this).val()+">");
+        console.log($(this).attr("id"), hiddenfield);
+        if($(this).val() == ""){
+          $("#"+hiddenfield).val("");
         }else{
-        $("#"+hiddenfield).val("");        
+          $("#"+hiddenfield).val(tokenLeft+$(this).val()+tokenRight);
         }
     });
-    */
+    
+    $("#view").on('change', "textarea.visible", function(){
+        token='""""';
+        hiddenfield = $(this).attr("id").replace("field_", "").replace(":", '\\:');  
+        console.log($(this).attr("id"), hiddenfield);
+          $("#"+hiddenfield).val(token+$(this).val()+token);
+    });
+
     $("#view").on('click', "button.add", function(){
      id = $(this).prev().attr("id").replace(/field_/,"");
      x = id.split(separator);

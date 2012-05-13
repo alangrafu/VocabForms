@@ -4,7 +4,7 @@
          {
            "name": "{%if i.label.value%}{{i.label.value}}{%else%}{{i.resource.value}}{%endif%}",
            "value": "{{i.resource.mirroredUri}}"
-         }{%if forloop.first %}{%if models.main|length >1%},{%endif%}{%endif%}
+         }{%if models.main|length >1 && models.main|length > forloop.counter%},{%endif%}
        {%endfor%}
    ]
 

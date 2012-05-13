@@ -139,6 +139,11 @@ padding-left: 10px;
     border-radius: 20px;
 }
 
+input.visible{
+    border: solid;
+    border-width: 2px;
+}
+
 .overlay-background{
   position: fixed;
   height:100%;

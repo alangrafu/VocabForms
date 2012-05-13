@@ -12,3 +12,4 @@ SELECT DISTINCT ?resource (SAMPLE(?l) AS ?label) WHERE {
       ?p rdfs:subPropertyOf* rdfs:label .
     }
 }GROUP BY ?resource
+ORDER BY ?label

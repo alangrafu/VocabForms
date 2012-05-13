@@ -1,4 +1,4 @@
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes WHERE {
+SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes ?htmlelement WHERE {
   GRAPH <{{lodspk.vocab}}>{  
     {{lodspk.args.arg0}}  rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
@@ -15,9 +15,10 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?pred
       ?lps layout:uriRelated {{lodspk.args.arg0}} .
       OPTIONAL{ ?lps layout:position ?pos } 
       OPTIONAL{ ?lps layout:hasClass ?classes } 
+      OPTIONAL{ ?lps layout:htmlElement ?htmlelement } 
   }
       MINUS{?lps layout:display false.}
   }
-}GROUP BY ?predicate ?predRange ?pos ?classes
+}GROUP BY ?predicate ?predRange ?pos ?classes ?htmlelement
 ORDER BY DESC(?pos) ?predLabel ?predicate
 
