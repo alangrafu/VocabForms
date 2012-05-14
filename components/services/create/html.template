@@ -3,6 +3,7 @@
   <head>
     <title>Create instance</title>
     {%include "../../includes/header.inc"%}
+    <link rel="stylesheet" href="{{lodspk.home}}upload/css/jquery.fileupload-ui.css">
     <script type="text/javascript">
     var processingUri = "{{lodspk.home}}processing";
     var existsUri = "{{lodspk.home}}exists/";
@@ -26,45 +27,34 @@
 	#city { width: 25em; }
 	</style>  </head>
   <body>
+
     <h1>Create instance of {{lodspk.args.arg0}}</h1>
   {%include "../../includes/menu.inc"%}
     <section>
-    <div class="buttons">
+      {%if !first.preds.predicate.value%}
+    <h1>Can't find fields for this type</h1>  
+  {%else%}
+  <div class="buttons">
     <button id="run" class="btn btn-primary btn-large">Save</button><br/>
     <button id="cancel" class="btn btn-primary btn-large">Cancel</button>
     </div>
+
  	 <table class="rounded-corners-a" id="view">
  	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"/></td></tr>
  	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><textarea cols="20" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea></td></tr>
-    {% for row in models.data %}
-        <tr>
-          <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
-          <td  class="{%cycle "odd" "even"%}">
-          {%if row.htmlelement.value == "select"%}
-          <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible"></select>
-          <script type="text/javascript">
-          $(document).ready(function(){
-          fillSelectForm("field_1-{{ row.predicate.curie }}", "{{row.predRange.curie}}");
-          });
-          </script>
-          {%else%}
-          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible" size="100" value=""/>
-          {%endif%}
-          </td></tr>
-    {% endfor %}
-    {% for row in models.object %}
+    {% for row in models.preds %}
     <tr>
       <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
       <td class="{%cycle "odd" "even"%}">
           {%if row.htmlelement.value == "select"%}
-          <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible"></select>
+          <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}datatype{%else%}objecttype{%endif%} visible"></select>
           <script type="text/javascript">
           $(document).ready(function(){
           fillSelectForm("field_1-{{ row.predicate.curie }}", "{{row.predRange.curie}}");
           });
           </script>
           {%else%}
-          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} datatype visible" size="100" value=""/>
+          <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}datatype{%else%}objecttype{%endif%} visible" size="100" value=""/>
     <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
     <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
           {%endif%}
@@ -72,20 +62,18 @@
     {% endfor %}
     </table>
  	 <form method="post" id="data">
- 	 <input type="text" id="uri" class="rdfs:Literal datatype" value=""/>
- 	 <input type="text" id="a" value="{{lodspk.args.arg0}}"/>
- 	 <input type="text" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
- 	 <input type="text" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
-    {% for row in models.data %}
-        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
-    {% endfor %}
-    {% for row in models.object %}
-        <input type="text" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
+ 	 <input type="hidden" id="uri" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" id="a" value="{{lodspk.args.arg0}}"/>
+ 	 <input type="hidden" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
+ 	 <input type="hidden" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
+    {% for row in models.preds %}
+        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
     {% endfor %}
     </form>
     <div id="msgok"></div>
     <div id="msgerror"></div>
     <div id="newform" style="display:none" class="overlay-background">
+    {%endif%}
     </section>
   </body>
 </html>

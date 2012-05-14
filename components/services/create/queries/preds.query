@@ -1,11 +1,13 @@
-SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes ?htmlelement WHERE {
+SELECT DISTINCT ?predicate ?predType (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?predLabelEs) ?predRange ?pos ?classes ?htmlelement WHERE {
   GRAPH <{{lodspk.vocab}}>{  
     {{lodspk.args.arg0}}  rdfs:subClassOf * ?y.
     ?predicate rdfs:domain ?y ;
-               a owl:ObjectProperty. 
+               a ?predType ;
+               a rdf:Property. 
     OPTIONAL { ?predicate rdfs:label ?pl }
     OPTIONAL { ?predicate rdfs:label ?ples. FILTER(LANG(?plen) = "es") }
     OPTIONAL { ?predicate rdfs:range ?predRange }
+    FILTER(str(?predType) = "http://www.w3.org/2002/07/owl#DatatypeProperty" || str(?predType) = "http://www.w3.org/2002/07/owl#ObjectProperty")
     FILTER NOT EXISTS { ?subprop rdfs:subPropertyOf ?predicate }
        
   }
@@ -19,6 +21,6 @@ SELECT DISTINCT ?predicate (SAMPLE (?pl) AS ?predLabel) (SAMPLE (?ples) AS ?pred
   }
       MINUS{?lps layout:display false.}
   }
-}GROUP BY ?predicate ?predRange ?pos ?classes ?htmlelement
+}GROUP BY ?predicate ?predRange ?pos ?classes ?htmlelement ?predType
 ORDER BY DESC(?pos) ?predLabel ?predicate
 
