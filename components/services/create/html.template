@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% for i, ns in lodspk.ns %}xmlns:{{i}}="{{ns}}" 
+    {%endfor%}>
   <head>
     <title>Create instance</title>
     {%include "../../includes/header.inc"%}
-    <link rel="stylesheet" href="{{lodspk.home}}upload/css/jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="{{lodspk.home}}upload/css/jquery.fileupload-ui.css"/>
     <script type="text/javascript">
     var processingUri = "{{lodspk.home}}processing";
     var existsUri = "{{lodspk.home}}exists/";
@@ -12,6 +13,7 @@
     var homeUri = "{{lodspk.home}}";
     var creationMode = true;
     var separator = "-";
+    var baseUri = "{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/";
     var closeIFrame = function() 
     {
     $('#newform').empty().hide();
@@ -38,14 +40,15 @@
     <button id="run" class="btn btn-primary btn-large">Save</button><br/>
     <button id="cancel" class="btn btn-primary btn-large">Cancel</button>
     </div>
-
- 	 <table class="rounded-corners-a" id="view">
- 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td><td class="odd"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"/></td></tr>
- 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td><td class="even"><textarea cols="20" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea></td></tr>
+ 	 <table class="rounded-corners-a" id="view" about="" typeof="{{lodspk.args.arg0}}">
+ 	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td>
+ 	      <td class="odd" style="text-align: right"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"></input><span id="field_1-rdfs:label" class="invisible"  property="rdfs:label"></span></td></tr>
+ 	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td>
+ 	      <td class="even" style="text-align: right"><textarea cols="30" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea><span id="field_1-rdfs:comment" class="invisible"  property="rdfs:comment"></span></td></tr>
     {% for row in models.preds %}
     <tr>
       <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
-      <td class="{%cycle "odd" "even"%}">
+      <td class="{%cycle "odd" "even"%}" style="text-align: right">
           {%if row.htmlelement.value == "select"%}
           <select id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}datatype{%else%}objecttype{%endif%} visible"></select>
           <script type="text/javascript">
@@ -55,25 +58,16 @@
           </script>
           {%else%}
           <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}datatype{%else%}objecttype{%endif%} visible" size="100" value=""/>
-    <button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button>
-    <button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>
           {%endif%}
+          <span id="field_1-{{ row.predicate.curie }}" class="invisible"  {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}property{%else%}rel{%endif%}="{{ row.predicate.curie }}"></span>
     </td></tr>
     {% endfor %}
     </table>
- 	 <form method="post" id="data">
- 	 <input type="hidden" id="uri" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" id="a" value="{{lodspk.args.arg0}}"/>
- 	 <input type="hidden" id="1-rdfs:label" class="rdfs:Literal datatype" value=""/>
- 	 <input type="hidden" id="1-rdfs:comment" class="rdfs:Literal datatype" value=""/>
-    {% for row in models.preds %}
-        <input type="hidden" name="{{ row.predicate.curie }}" id="1-{{ row.predicate.curie }}"  value="" />
-    {% endfor %}
-    </form>
     <div id="msgok"></div>
     <div id="msgerror"></div>
-    <div id="newform" style="display:none" class="overlay-background">
+    <div id="newform" style="display:none" class="overlay-background"></div>
     {%endif%}
     </section>
+    <textarea id="r"></textarea>
   </body>
 </html>

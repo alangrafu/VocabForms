@@ -2,13 +2,6 @@
 
 INSERT { 
   GRAPH <{{lodspk.instances}}>{
-    <{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}> 
-    {%for i, item in lodspk.args%}{%if i != "uri"%}{%if item != ""%}
-          {{i|explode:"-"|pop}} {{item|safe}};
-        {%endif%}{%endif%}{%endfor%}
+    {{lodspk.args.triples}}
   }
-} WHERE{
-FILTER (NOT EXISTS {<{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}> ?p ?o} &&
-        NOT EXISTS {?q <{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}> ?r} && 
-        NOT EXISTS {?s ?t <{{lodspk.instances}}/{{lodspk.args.a|explode:":"|pop|lower}}/{{lodspk.args.uri}}>}) 
-}
+}WHERE{}
