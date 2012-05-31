@@ -61,10 +61,11 @@
           <span id="field_1-{{ row.predicate.curie }}" name="{{ row.predicate.curie }}" class="invisible"  {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}property{%else%}rel{%endif%}="{{ row.predicate.curie }}"></span>
     </td></tr>
     {% endfor %}
+    <tr><td><button class="add-connection btn-primary btn-mini" id="poder:PoliticalConnection">Add political Connection</button></td><td></td>
     </table>
     <table class="rounded-corners-a" id="view" about="" typeof="{{lodspk.args.arg0}}">
     {%for row in models.rev%}
-      <tr><td>Create new {{row.predLabel.value}}</td></tr>
+      <tr><td>Create new {{row.predLabel.value}}</td><td></td></tr>
     {%endfor%}
     </table>
     <div id="msgerror"></div>

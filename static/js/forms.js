@@ -1,6 +1,5 @@
 $(document).ready(function(){
     function autocomplete(item){
-      console.log(item);
       try{
         $( item ).autocomplete({
             source: function( request, response ) {
@@ -35,7 +34,7 @@ $(document).ready(function(){
     
     
     //function addAutoComplete(){
-      $(".objecttype, .visible").each(function(i, item){
+      $(".objecttype.visible").each(function(i, item){
           autocomplete(item);
       });
     //}
@@ -46,6 +45,10 @@ $(document).ready(function(){
         var iframeUri = homeUri+"create/"+($(this).attr("id").replace("new_", ""));
         $("#newform").html('<div style="height:75px"></div><div class="overlay-dialog"><iframe class="overlay-iframe overlay-element" frameborder="0" src="'+iframeUri+'"></iframe><button class="btn btn-primary btn-large close">Close</button></div>');
 
+    });
+    
+    $("body").on('click', 'button.add-connection', function(){ 
+        $(this).parent().next().append("<div rev='foaf:page' resource='http://google.com'>HOLA</div>");
     });
     
     $("body").on('click', 'button.close', function(){
@@ -72,6 +75,7 @@ $(document).ready(function(){
             }
           }
       });
+      console.log($('#view').rdf().databank.dump({format: 'text/turtle', serialize: true}));
     }
     
     $('<button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button><button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>').insertBefore(".objecttype");
@@ -125,7 +129,7 @@ $(document).ready(function(){
           postData();
         }
     });
-   $("#view").on('change', function(){ checkIfExists( $(this).attr("about"));});
+    $('#field_1-rdfs:label').on('change',  function(){ checkIfExists( $(this).attr("about"));});
    
    
    function checkIfExists(uri){
