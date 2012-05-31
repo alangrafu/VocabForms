@@ -1,7 +1,0 @@
-{{lodspk.prefixes}}
-
-INSERT { 
-  GRAPH <{{lodspk.instances}}>{
-    {{lodspk.args.triples}}
-  }
-}WHERE{}

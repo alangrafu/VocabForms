@@ -8,8 +8,8 @@
     <script type="text/javascript">
     var processingUri = "{{lodspk.home}}processing";
     var existsUri = "{{lodspk.home}}exists/";
-    var autocompleteUri = "{{lodspk.home}}/search/";
-    var okUri = "{{lodspk.home}}";
+    var autocompleteUri = "{{lodspk.home}}search/";
+    var okUri = "{{lodspk.home}}instances/{{lodspk.args.arg0}}";
     var homeUri = "{{lodspk.home}}";
     var creationMode = true;
     var separator = "-";
@@ -23,7 +23,6 @@
     </script>
     <script type="text/javascript" src="{{lodspk.home}}js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="{{lodspk.home}}js/forms.js"></script>
-    <script type="text/javascript" src="{{lodspk.home}}js/fillers.js"></script>
 <style>
 	.ui-autocomplete-loading { background: white url('{{lodspk.home}}img/ui-anim_basic_16x16.gif') right center no-repeat; }
 	#city { width: 25em; }
@@ -42,9 +41,9 @@
     </div>
  	 <table class="rounded-corners-a" id="view" about="" typeof="{{lodspk.args.arg0}}">
  	      <tr><td class="odd"><label for="field_1-rdfs:label"><strong>Label</strong></label></td>
- 	      <td class="odd" style="text-align: right"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"></input><span id="field_1-rdfs:label" class="invisible"  property="rdfs:label"></span></td></tr>
+ 	      <td class="odd" style="text-align: right"><input type="text" id="field_1-rdfs:label" class="rdfs:Literal datatype visible" value="" size="100"></input><span id="field_1-rdfs:label" name="rdfs:label" class="invisible"  property="rdfs:label"></span></td></tr>
  	      <tr><td class="even"><label for="field_1-rdfs:comment">Comment</label></td>
- 	      <td class="even" style="text-align: right"><textarea cols="30" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea><span id="field_1-rdfs:comment" class="invisible"  property="rdfs:comment"></span></td></tr>
+ 	      <td class="even" style="text-align: right"><textarea cols="30" rows="10" id="field_1-rdfs:comment" class="rdfs:Literal datatype visible"></textarea><span id="field_1-rdfs:comment" name="rdfs:comment" class="invisible"  property="rdfs:comment"></span></td></tr>
     {% for row in models.preds %}
     <tr>
       <td class="{%cycle "odd" "even"%}"><label for="field_1-{{ row.predicate.curie }}">{%if row.predLabelEs.value%}{{row.predLabelEs.value}}{%else%}{{row.predLabel.value}}{%endif%}</label></td>
@@ -59,12 +58,17 @@
           {%else%}
           <input type="text" id="field_1-{{ row.predicate.curie }}" class="{{row.predRange.curie}} {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}datatype{%else%}objecttype{%endif%} visible" size="100" value=""/>
           {%endif%}
-          <span id="field_1-{{ row.predicate.curie }}" class="invisible"  {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}property{%else%}rel{%endif%}="{{ row.predicate.curie }}"></span>
+          <span id="field_1-{{ row.predicate.curie }}" name="{{ row.predicate.curie }}" class="invisible"  {%if row.predType.value == "http://www.w3.org/2002/07/owl#DatatypeProperty"%}property{%else%}rel{%endif%}="{{ row.predicate.curie }}"></span>
     </td></tr>
     {% endfor %}
     </table>
-    <div id="msgok"></div>
+    <table class="rounded-corners-a" id="view" about="" typeof="{{lodspk.args.arg0}}">
+    {%for row in models.rev%}
+      <tr><td>Create new {{row.predLabel.value}}</td></tr>
+    {%endfor%}
+    </table>
     <div id="msgerror"></div>
+    <div id="msgok"></div>
     <div id="newform" style="display:none" class="overlay-background"></div>
     {%endif%}
     </section>

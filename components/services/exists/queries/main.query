@@ -2,20 +2,20 @@ SELECT * WHERE{
   {
     GRAPH ?g{
      {
-      <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> ?x []      
+      <{{lodspk.args.all|deurifier}}> ?x []      
      }UNION{
-      [] <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> []
+      [] <{{lodspk.args.all|deurifier}}> []
      }UNION{
-      [] ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}>
+      [] ?x <{{lodspk.args.all|deurifier}}>
      }
    }
   }UNION{
     {
-     <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> ?x []
+     <{{lodspk.args.all|deurifier}}> ?x []
     }UNION{
-     ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}> []
+     ?x <{{lodspk.args.all|deurifier}}> []
     }UNION{
-     [] ?x <{{lodspk.instances}}/{{lodspk.args.arg0|explode:":"|pop|lower}}/{{lodspk.args.arg1}}>
+     [] ?x <{{lodspk.args.all|deurifier}}>
     }
   }
 }LIMIT 1

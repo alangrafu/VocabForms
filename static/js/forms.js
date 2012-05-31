@@ -1,46 +1,45 @@
-
-
-$(function(){
-  function autocomplete(item){
-      $( item ).autocomplete({
-          source: function( request, response ) {
-            $.ajax({
-                url: autocompleteUri+$(item).attr("class").split(' ')[0]+"/"+request.term,
-                dataType: "json",
-                success: function( data ) {
-                  response( $.map( data.items, function( item ) {
-                      return {
-                        label: item.name,
-                        value: item.value
-                      }
-                  }));
-                }
-            });
-          },
-          minLength: 2,
-          select: function( event, ui ) {
-            $(this).val(ui.item.value);
-            $(this).next().attr("resource", ui.item.value);
-            updateGraph();
-          },
-          /*open: function() {
-          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
-          },
-          close: function() {
-          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
-          }*/
-      });
-    }
+$(document).ready(function(){
+    function autocomplete(item){
+      console.log(item);
+      try{
+        $( item ).autocomplete({
+            source: function( request, response ) {
+              $.ajax({
+                  url: autocompleteUri+$(item).attr("class").split(' ')[0]+"/"+request.term,
+                  dataType: "json",
+                  success: function( data ) {
+                    response( $.map( data.items, function( item ) {
+                        return {
+                          label: item.name,
+                          value: item.value
+                        }
+                    }));
+                  }
+              });
+            },
+            minLength: 2,
+            select: function( event, ui ) {
+              $(this).val(ui.item.value);
+              $(this).next().attr("resource", ui.item.value);
+              updateGraph();
+            },
+        });
+      }
+      catch(err){
+        console.log(err);
+      }
       
+    }
+    
     var isInIFrame = (window.location != window.parent.location) ? true : false;
     
     
-    function addAutoComplete(){
-      $("input.objecttype").each(function(i, item){
+    //function addAutoComplete(){
+      $(".objecttype, .visible").each(function(i, item){
           autocomplete(item);
       });
-    }
-    addAutoComplete();
+    //}
+    //addAutoComplete();
         
     $("body").on('click', 'button.new-entity', function(){        
         $("#newform").show();
@@ -53,20 +52,28 @@ $(function(){
         $("#newform").hide();    
     });
     
-function updateGraph(){
-        $("#view").attr("about", baseUri+$("#field_1-rdfs\\:label").val().replace(/\s+/gi, "_").toLowerCase());
-        $(".visible").each(function(i, item){
+    function updateGraph(){
+      $("#view").attr("about", baseUri+$("#field_1-rdfs\\:label").val().replace(/\s+/gi, "_").toLowerCase());
+      $(".visible").each(function(i, item){
+          if($(item).attr("value") != ""){
+            predicate = $(item).next().attr("name");
             if($(item).is(".objecttype")){
-              console.log($(item).attr("id"), $(item).attr("value"));
-              if($(item).attr("value") != ""){
-                $(item).next().attr("resource", $(item).attr("value"));
-              }
+              $(item).next().attr("rel", predicate);
+              $(item).next().attr("resource", $(item).attr("value"));
             }else{
+              $(item).next().attr("property", predicate);
               $(item).next().attr("content", $(item).attr("value"));
             }
-        });
-        console.log($('#view').rdf().databank.dump({format: 'application/rdf+xml', serialize: true}));
-}
+          }else{
+            if($(item).is(".objecttype")){
+              $(item).next().removeAttr("rel");
+            }else{
+              $(item).next().removeAttr("property");
+            }
+          }
+      });
+    }
+    
     $('<button id="add_{{ row.predicate.curie }}" class="btn-mini btn add">+</button><button id="new_{{ row.predRange.curie }}" class="btn-mini btn new-entity">Nueva entidad</button>').insertBefore(".objecttype");
     $("#view").on('change', "input", function(){ updateGraph();});
     $("#view").on('change', "textarea", function(){ updateGraph();});
@@ -83,6 +90,14 @@ function updateGraph(){
      applyClasses();
     });
     
+	
+		$( "#msgerror" ).dialog({
+        modal: true,
+        autoOpen: false,
+        show: "blind",
+        hide: "blind"
+		});
+
     $( "#msgok" ).dialog({
         modal: true,
         buttons: {
@@ -94,14 +109,7 @@ function updateGraph(){
         autoOpen: false,
         show: "blind",
         hide: "blind"
-		});
-		
-		$( "#msgerror" ).dialog({
-        modal: true,
-        autoOpen: false,
-        show: "blind",
-        hide: "blind"
-		});
+		});	
 		
 		$("#cancel").click(function(){
 		    if(isInIFrame){
@@ -113,63 +121,59 @@ function updateGraph(){
 		
 		
     $("#run").click(function(){
-        var currentButton = "#"+$(this).attr("id");
-        $(currentButton).attr("disabled", "disabled");
-        if(creationMode == true){
-         /* $.ajax({
-              type: "GET",
-              url: $("#view").attr("about"),
-              dataType: "json",
-              success: function(data){
-                if(data.exists == true){
-                  $("#msgerror").attr("title", "Change label").html("<p>URI already exists. Change the label and try again</p>");
-                  $("#msgerror").dialog("open");
-                }else{
-                  postData();      
-                  return false;
-                }
-                $(currentButton).removeAttr("disabled");
-              }
-          });*/
-                  postData();      
-        }else{
-          postData();  
-          $(currentButton).removeAttr("disabled");
-          
+        if(!checkIfExists($("#view").attr("about"))){
+          postData();
         }
     });
-    
-    function postData(){
-      var dataString = "";
-      var connector = "";
-      $("#data>input").each(function(i, item){
-          if($(item).val() != "" && $(item).val() != null){
-            dataString += connector+$(item).attr("id")+"="+$(item).val();
-            connector = "&" //Adding & after the first param
-          }
-      });
-      var dumpGraph = $('#view').rdf().where('?a ?b ?c').filter(function () {return this.c.value !== ""; });
-      $.post(processingUri, {request: dumpGraph.dump({format: 'application/rdf+xml', serialize: true})},
-        function(data) {
-          console.log("Data status:", data.status);
-          if(parseInt(data.status) >= 200 && parseInt(data.status) < 300){
-            if(isInIFrame){
-              window.parent.closeIFrame();
-              return;
-            }
-            $("#msgok").html("Ok").dialog("open");
-          }else{
-            $("#msgerror").attr("title", "Error").html("Something happened when submitting the data");
-            $( "#msgerror" ).dialog( "open" );
-          }
-          
-        }, 'json');
-    }
-    
-    function applyClasses(){
-    		$("input.disabled").attr("disabled", "disabled");
-    }
-    
-    applyClasses();
-
+   $("#view").on('change', function(){ checkIfExists( $(this).attr("about"));});
+   
+   
+   function checkIfExists(uri){
+     $.ajax({
+         type: "GET",
+         url: existsUri+uri.replace(":/", ""),
+         dataType: "json",
+         success: function(data){
+           if(data.exists == true){
+             $("#msgerror").attr("title", "Change label").html("<p>URI already exists. Change the label and try again</p>");
+             $("#msgerror").dialog("open");
+             return true;
+           }else{
+             return false;
+           }
+         }
+     });
+   }
+   
+   function postData(){
+     var dataString = "";
+     var connector = "";
+     var dumpGraph = $('#view').rdf().databank.dump({format: 'text/turtle', serialize: true});
+     $("#run").attr("disabled", "disabled");
+     $.post(processingUri, dumpGraph,
+       function(data) {
+         console.log("Data status:", data.status);
+         if(parseInt(data.status) >= 200 && parseInt(data.status) < 300){
+           if(isInIFrame){
+             window.parent.closeIFrame();
+             return;
+           }
+           $("#msgok").attr("title", "Saved").html("<p>Data saved succesfully</p>");
+           $("#msgok").dialog("open");
+         }else{
+           $("#msgerror").attr("title", "Error").html("Something happened when submitting the data");
+           $( "#msgerror" ).dialog( "open" );
+         }
+         
+       }, 'json')
+     .error(function(xhr, statusText, err){
+         alert("Error:" + xhr.status); 
+     });
+   }
+   
+   function applyClasses(){
+     $("input.disabled").attr("disabled", "disabled");
+   }
+   
+   applyClasses();
 });
